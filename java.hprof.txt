@@ -1,0 +1,807 @@
+JAVA PROFILE 1.0.1, created Wed Nov 28 00:09:52 2001
+
+Header for -Xhprof ASCII Output
+
+Copyright 1998 Sun Microsystems, Inc. 901 San Antonio Road, Palo Alto,
+California, 94303, U.S.A.  All Rights Reserved.
+
+WARNING!  This file format is under development, and is subject to
+change without notice.
+
+This file contains the following types of records:
+
+THREAD START
+THREAD END      mark the lifetime of Java threads
+
+TRACE           represents a Java stack trace.  Each trace consists
+                of a series of stack frames.  Other records refer to
+                TRACEs to identify (1) where object allocations have
+                taken place, (2) the frames in which GC roots were
+                found, and (3) frequently executed methods.
+
+HEAP DUMP       is a complete snapshot of all live objects in the Java
+                heap.  Following distinctions are made:
+
+                ROOT    root set as determined by GC
+                CLS     classes 
+                OBJ     instances
+                ARR     arrays
+
+SITES           is a sorted list of allocation sites.  This identifies
+                the most heavily allocated object types, and the TRACE
+                at which those allocations occurred.
+
+CPU SAMPLES     is a statistical profile of program execution.  The VM
+                periodically samples all running threads, and assigns
+                a quantum to active TRACEs in those threads.  Entries
+                in this record are TRACEs ranked by the percentage of
+                total quanta they consumed; top-ranked TRACEs are
+                typically hot spots in the program.
+
+CPU TIME	is a profile of program execution obtained by measuring
+                the time spent in individual methods (excluding the time
+                spent in callees), as well as by counting the number of
+                times each method is called. Entries in this record are
+                TRACEs ranked by the percentage of total CPU time. The
+                "count" field indicates the number of times each TRACE 
+                is invoked.
+
+MONITOR TIME    is a profile of monitor contention obtained by measuring
+		the time spent by a thread waiting to enter a monitor.
+		Entries in this record are TRACEs ranked by the percentage
+		of total monitor contention time and a brief description
+		of the monitor.  The "count" field indicates the number of 
+		times the monitor was contended at that TRACE.
+
+MONITOR DUMP	is a complete snapshot of all the monitors and threads in 
+		the System.
+
+HEAP DUMP, SITES, CPU SAMPLES|TIME and MONITOR DUMP|TIME records are generated 
+at program exit.  They can also be obtained during program execution by typing 
+Ctrl-\ (on Solaris) or by typing Ctrl-Break (on Win32).
+
+--------
+
+THREAD START (obj=6f14b0, id = 1, name="Finalizer", group="system")
+THREAD START (obj=6f1350, id = 2, name="Reference Handler", group="system")
+THREAD START (obj=6f1260, id = 3, name="main", group="main")
+THREAD START (obj=6f2160, id = 4, name="HPROF CPU profiler", group="system")
+THREAD START (obj=6f5a90, id = 5, name="Signal Dispatcher", group="system")
+THREAD START (obj=6f5720, id = 6, name="CompileThread0", group="system")
+THREAD END (id = 3)
+THREAD START (obj=71b7a0, id = 7, name="Thread-0", group="main")
+THREAD END (id = 5)
+TRACE 108:
+	java.lang.String.valueOf(String.java:2040)
+	java.io.PrintStream.print(PrintStream.java:326)
+	Scatter.plot(Scatter.java:52)
+	SimNet.report(SimNet.java:692)
+TRACE 80:
+	SimNet$Node.schedule(SimNet.java:214)
+	SimNet$Node.doXmit(SimNet.java:276)
+	SimNet.simulate(SimNet.java:635)
+	SimNet.main(SimNet.java:719)
+TRACE 10:
+	<empty>
+TRACE 59:
+	SimNet$Node.propagate(SimNet.java:177)
+	SimNet$Node.doXmit(SimNet.java:334)
+	SimNet.simulate(SimNet.java:635)
+	SimNet.main(SimNet.java:719)
+TRACE 39:
+	java.lang.Double.compareTo(Double.java:576)
+	java.util.TreeMap.compare(TreeMap.java:1047)
+	java.util.TreeMap.put(TreeMap.java:449)
+	SimNet.queue(SimNet.java:549)
+TRACE 16:
+	SimNet.<init>(SimNet.java:472)
+	SimNet.main(SimNet.java:736)
+TRACE 52:
+	java.lang.Integer.toString(Integer.java:289)
+	java.lang.Integer.toString(Integer.java:108)
+	java.lang.String.valueOf(String.java:2056)
+	java.lang.StringBuffer.append(StringBuffer.java:515)
+TRACE 81:
+	SimNet$Node.propagate(SimNet.java:172)
+	SimNet$Node.queueMsg(SimNet.java:240)
+	SimNet$Node.doArrival(SimNet.java:358)
+	SimNet.simulate(SimNet.java:639)
+TRACE 75:
+	SimNet$Node.doXmit(SimNet.java:327)
+	SimNet.simulate(SimNet.java:635)
+	SimNet.main(SimNet.java:719)
+	SimNet.main(SimNet.java:736)
+TRACE 53:
+	java.io.PrintStream.print(PrintStream.java:412)
+	java.io.PrintStream.println(PrintStream.java:549)
+	SimNet$Node.doXmit(SimNet.java:317)
+	SimNet.simulate(SimNet.java:635)
+TRACE 13:
+	SimNet.<init>(SimNet.java:458)
+	SimNet.main(SimNet.java:736)
+TRACE 88:
+	java.util.TreeMap.put(TreeMap.java:463)
+	SimNet.queue(SimNet.java:549)
+	SimNet$Node.schedule(SimNet.java:225)
+	SimNet$Node.doXmit(SimNet.java:276)
+TRACE 97:
+	java.lang.StringBuffer.append(StringBuffer.java:402)
+	SimNet$Node.doXmit(SimNet.java:315)
+	SimNet.simulate(SimNet.java:635)
+	SimNet.main(SimNet.java:719)
+TRACE 14:
+	java.lang.ClassLoader.findBootstrapClass(ClassLoader.java:Native method)
+	java.lang.ClassLoader.findBootstrapClass0(ClassLoader.java:677)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:292)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:290)
+TRACE 93:
+	java.io.PrintStream.newLine(PrintStream.java:285)
+	java.io.PrintStream.println(PrintStream.java:550)
+	SimNet$Node.doXmit(SimNet.java:317)
+	SimNet.simulate(SimNet.java:635)
+TRACE 46:
+	SimNet$Node.schedule(SimNet.java:197)
+	SimNet$Node.queueMsg(SimNet.java:235)
+	SimNet$Node.doXmit(SimNet.java:327)
+	SimNet.simulate(SimNet.java:635)
+TRACE 78:
+	java.util.TreeMap.fixAfterInsertion(TreeMap.java:1248)
+	java.util.TreeMap.put(TreeMap.java:458)
+	SimNet.queue(SimNet.java:549)
+	SimNet$Node.schedule(SimNet.java:225)
+TRACE 40:
+	java.lang.StringBuffer.toString(StringBuffer.java:1068)
+	SimNet$Node.doXmit(SimNet.java:317)
+	SimNet.simulate(SimNet.java:635)
+	SimNet.main(SimNet.java:719)
+TRACE 66:
+	SimNet.queue(SimNet.java:549)
+	SimNet$Node.propagate(SimNet.java:181)
+	SimNet$Node.queueMsg(SimNet.java:240)
+	SimNet$Node.doXmit(SimNet.java:327)
+TRACE 47:
+	java.io.BufferedWriter.write(BufferedWriter.java:205)
+	java.io.Writer.write(Writer.java:129)
+	java.io.BufferedWriter.newLine(BufferedWriter.java:222)
+	java.io.PrintStream.newLine(PrintStream.java:286)
+TRACE 72:
+	SimNet$Node.doXmit(SimNet.java:308)
+	SimNet.simulate(SimNet.java:635)
+	SimNet.main(SimNet.java:719)
+	SimNet.main(SimNet.java:736)
+TRACE 87:
+	SimNet$Node.propagate(SimNet.java:177)
+	SimNet$Node.queueMsg(SimNet.java:240)
+	SimNet$Node.doXmit(SimNet.java:327)
+	SimNet.simulate(SimNet.java:635)
+TRACE 85:
+	SimNet$Node.arrivalWait(SimNet.java:255)
+	SimNet$Node.doArrival(SimNet.java:370)
+	SimNet.simulate(SimNet.java:639)
+	SimNet.main(SimNet.java:719)
+TRACE 30:
+	sun.io.CharToByteSingleByte.convert(CharToByteSingleByte.java:96)
+	sun.io.CharToByteConverter.convertAny(CharToByteConverter.java:142)
+	java.io.OutputStreamWriter.write(OutputStreamWriter.java:167)
+	java.io.BufferedWriter.flushBuffer(BufferedWriter.java:114)
+TRACE 48:
+	java.lang.FloatingDecimal.toJavaFormatString(FloatingDecimal.java:906)
+	java.lang.Double.toString(Double.java:128)
+	java.lang.String.valueOf(String.java:2101)
+	java.io.PrintStream.print(PrintStream.java:382)
+TRACE 118:
+	java.io.OutputStreamWriter.write(OutputStreamWriter.java:155)
+	java.io.BufferedWriter.flushBuffer(BufferedWriter.java:114)
+	java.io.PrintStream.write(PrintStream.java:268)
+	java.io.PrintStream.print(PrintStream.java:326)
+TRACE 86:
+	java.io.BufferedWriter.write(BufferedWriter.java:204)
+	java.io.Writer.write(Writer.java:129)
+	java.io.PrintStream.write(PrintStream.java:267)
+	java.io.PrintStream.print(PrintStream.java:412)
+TRACE 51:
+	java.io.FileOutputStream.writeBytes(FileOutputStream.java:Unknown line)
+	java.io.FileOutputStream.write(FileOutputStream.java:212)
+	java.io.PrintStream.write(PrintStream.java:222)
+	java.io.OutputStreamWriter.flushBuffer(OutputStreamWriter.java:230)
+TRACE 115:
+	java.lang.String.valueOf(String.java:2041)
+	java.io.PrintStream.print(PrintStream.java:326)
+	Scatter.plot(Scatter.java:50)
+	SimNet.main(SimNet.java:730)
+TRACE 82:
+	SimNet$Node.doXmit(SimNet.java:317)
+	SimNet.simulate(SimNet.java:635)
+	SimNet.main(SimNet.java:719)
+	SimNet.main(SimNet.java:736)
+TRACE 32:
+	SimNet$Node.schedule(SimNet.java:204)
+	SimNet$Node.queueMsg(SimNet.java:235)
+	SimNet$Node.doXmit(SimNet.java:327)
+	SimNet.simulate(SimNet.java:635)
+TRACE 22:
+	java.io.FileInputStream.read(FileInputStream.java:Native method)
+	SimNet.readInt(SimNet.java:490)
+	SimNet$Node.readInput(SimNet.java:133)
+	SimNet.readInput(SimNet.java:521)
+TRACE 103:
+	java.util.TreeMap.put(TreeMap.java:457)
+	SimNet.queue(SimNet.java:549)
+	SimNet$Node.schedule(SimNet.java:225)
+	SimNet$Node.queueMsg(SimNet.java:235)
+TRACE 5:
+	java.util.Properties.load(Properties.java:189)
+	java.security.Security.initialize(Security.java:87)
+	java.security.Security.access$000(Security.java:26)
+	java.security.Security$1.run(Security.java:65)
+TRACE 98:
+	java.lang.String.<init>(String.java:253)
+	java.lang.FloatingDecimal.toJavaFormatString(FloatingDecimal.java:974)
+	java.lang.Double.toString(Double.java:128)
+	java.lang.String.valueOf(String.java:2101)
+TRACE 4:
+	java.security.Security.<clinit>(Security.java:63)
+	java.security.Policy$1.run(Policy.java:149)
+	java.security.AccessController.doPrivileged(AccessController.java:Native method)
+	java.security.Policy.getPolicyNoCheck(Policy.java:146)
+TRACE 45:
+	SimNet$Node.propagate(SimNet.java:172)
+	SimNet$Node.doXmit(SimNet.java:334)
+	SimNet.simulate(SimNet.java:635)
+	SimNet.main(SimNet.java:719)
+TRACE 89:
+	java.io.PrintStream.write(PrintStream.java:222)
+	java.io.OutputStreamWriter.flushBuffer(OutputStreamWriter.java:230)
+	java.io.PrintStream.write(PrintStream.java:269)
+	java.io.PrintStream.print(PrintStream.java:412)
+TRACE 79:
+	SimNet.queue(SimNet.java:549)
+	SimNet$Node.propagate(SimNet.java:181)
+	SimNet$Node.doXmit(SimNet.java:334)
+	SimNet.simulate(SimNet.java:635)
+TRACE 9:
+	java.io.FilePermission.init(FilePermission.java:206)
+	java.io.FilePermission.<init>(FilePermission.java:256)
+	sun.net.www.protocol.file.FileURLConnection.getPermission(FileURLConnection.java:236)
+	java.net.URLClassLoader.getPermissions(URLClassLoader.java:427)
+TRACE 102:
+	java.lang.StringBuffer.append(StringBuffer.java:402)
+	SimNet$Node.doXmit(SimNet.java:314)
+	SimNet.simulate(SimNet.java:635)
+	SimNet.main(SimNet.java:719)
+TRACE 43:
+	java.lang.FloatingDecimal.toJavaFormatString(FloatingDecimal.java:974)
+	java.lang.Double.toString(Double.java:128)
+	java.lang.String.valueOf(String.java:2101)
+	java.io.PrintStream.print(PrintStream.java:382)
+TRACE 123:
+	java.lang.String.valueOf(String.java:2041)
+	java.io.PrintStream.print(PrintStream.java:326)
+	Scatter.plot(Scatter.java:52)
+	SimNet.main(SimNet.java:732)
+TRACE 70:
+	sun.io.CharToByteSingleByte.convert(CharToByteSingleByte.java:192)
+	sun.io.CharToByteConverter.convertAny(CharToByteConverter.java:142)
+	java.io.OutputStreamWriter.write(OutputStreamWriter.java:167)
+	java.io.BufferedWriter.flushBuffer(BufferedWriter.java:114)
+TRACE 105:
+	java.io.FileOutputStream.writeBytes(FileOutputStream.java:Native method)
+	java.io.FileOutputStream.write(FileOutputStream.java:212)
+	java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:72)
+	java.io.BufferedOutputStream.flush(BufferedOutputStream.java:130)
+TRACE 61:
+	SimNet$Node.doXmit(SimNet.java:314)
+	SimNet.simulate(SimNet.java:635)
+	SimNet.main(SimNet.java:719)
+	SimNet.main(SimNet.java:736)
+TRACE 8:
+	sun.net.www.protocol.file.Handler.openConnection(Handler.java:60)
+	java.net.URL.openConnection(URL.java:781)
+	java.net.URLClassLoader.getPermissions(URLClassLoader.java:427)
+	sun.misc.Launcher$AppClassLoader.getPermissions(Launcher.java:294)
+TRACE 38:
+	java.util.TreeMap.remove(TreeMap.java:489)
+	SimNet.dequeue(SimNet.java:554)
+	SimNet.simulate(SimNet.java:628)
+	SimNet.main(SimNet.java:719)
+TRACE 125:
+	java.lang.String.valueOf(String.java:2040)
+	java.io.PrintStream.print(PrintStream.java:326)
+	Scatter.plot(Scatter.java:50)
+	SimNet.main(SimNet.java:732)
+TRACE 109:
+	java.io.BufferedWriter.write(BufferedWriter.java:205)
+	java.io.Writer.write(Writer.java:129)
+	java.io.PrintStream.write(PrintStream.java:267)
+	java.io.PrintStream.print(PrintStream.java:326)
+TRACE 20:
+	java.io.FileInputStream.read(FileInputStream.java:Native method)
+	SimNet.readInt(SimNet.java:490)
+	SimNet$Node.readInput(SimNet.java:125)
+	SimNet.readInput(SimNet.java:521)
+TRACE 34:
+	Graph.count(Graph.java:28)
+	SimNet$Node.schedule(SimNet.java:213)
+	SimNet$Node.queueMsg(SimNet.java:235)
+	SimNet$Node.doXmit(SimNet.java:327)
+TRACE 41:
+	java.lang.FloatingDecimal.roundup(FloatingDecimal.java:371)
+	java.lang.FloatingDecimal.dtoa(FloatingDecimal.java:883)
+	java.lang.FloatingDecimal.<init>(FloatingDecimal.java:445)
+	java.lang.Double.toString(Double.java:128)
+TRACE 100:
+	Simulator.limit(Simulator.java:11)
+	Scatter.mark(Scatter.java:29)
+	SimNet$Node.queueMsg(SimNet.java:232)
+	SimNet$Node.doXmit(SimNet.java:327)
+TRACE 111:
+	java.io.BufferedWriter.write(BufferedWriter.java:200)
+	java.io.Writer.write(Writer.java:129)
+	java.io.PrintStream.write(PrintStream.java:267)
+	java.io.PrintStream.print(PrintStream.java:326)
+TRACE 15:
+	java.lang.ClassLoader.defineClass0(ClassLoader.java:Native method)
+	java.lang.ClassLoader.defineClass(ClassLoader.java:486)
+	java.security.SecureClassLoader.defineClass(SecureClassLoader.java:111)
+	java.net.URLClassLoader.defineClass(URLClassLoader.java:248)
+TRACE 24:
+	SimNet.readInt(SimNet.java:490)
+	SimNet$Node.readInput(SimNet.java:133)
+	SimNet.readInput(SimNet.java:521)
+	SimNet.main(SimNet.java:701)
+TRACE 65:
+	sun.io.CharToByteSingleByte.convert(CharToByteSingleByte.java:117)
+	sun.io.CharToByteConverter.convertAny(CharToByteConverter.java:142)
+	java.io.OutputStreamWriter.write(OutputStreamWriter.java:167)
+	java.io.BufferedWriter.flushBuffer(BufferedWriter.java:114)
+TRACE 67:
+	java.util.TreeMap.put(TreeMap.java:466)
+	SimNet.queue(SimNet.java:549)
+	SimNet$Node.propagate(SimNet.java:181)
+	SimNet$Node.queueMsg(SimNet.java:240)
+TRACE 11:
+	SimNet.<init>(SimNet.java:440)
+	SimNet.main(SimNet.java:736)
+TRACE 83:
+	java.util.TreeMap.compare(TreeMap.java:1047)
+	java.util.TreeMap.put(TreeMap.java:449)
+	SimNet.queue(SimNet.java:549)
+	SimNet$Node.schedule(SimNet.java:225)
+TRACE 49:
+	java.lang.StrictMath.floor(StrictMath.java:Native method)
+	java.lang.Math.floor(Math.java:322)
+	java.lang.Math.round(Math.java:524)
+	Simulator.limit(Simulator.java:11)
+TRACE 68:
+	SimNet$Node.propagate(SimNet.java:172)
+	SimNet$Node.queueMsg(SimNet.java:240)
+	SimNet$Node.doXmit(SimNet.java:327)
+	SimNet.simulate(SimNet.java:635)
+TRACE 77:
+	java.util.TreeMap.put(TreeMap.java:458)
+	SimNet.queue(SimNet.java:549)
+	SimNet$Node.schedule(SimNet.java:225)
+	SimNet$Node.queueMsg(SimNet.java:235)
+TRACE 107:
+	java.io.OutputStreamWriter.flushBuffer(OutputStreamWriter.java:222)
+	java.io.PrintStream.write(PrintStream.java:269)
+	java.io.PrintStream.print(PrintStream.java:326)
+	Scatter.plot(Scatter.java:52)
+TRACE 44:
+	SimNet$Node.doUpdate(SimNet.java:379)
+	SimNet.simulate(SimNet.java:647)
+	SimNet.main(SimNet.java:719)
+	SimNet.main(SimNet.java:736)
+TRACE 27:
+	SimNet$Node.doArrival(SimNet.java:339)
+	SimNet.simulate(SimNet.java:639)
+	SimNet.main(SimNet.java:719)
+	SimNet.main(SimNet.java:736)
+TRACE 18:
+	java.io.FileInputStream.read(FileInputStream.java:Native method)
+	SimNet.readInt(SimNet.java:483)
+	SimNet$Node.readInput(SimNet.java:133)
+	SimNet.readInput(SimNet.java:521)
+TRACE 35:
+	SimNet$Node.doXmit(SimNet.java:315)
+	SimNet.simulate(SimNet.java:635)
+	SimNet.main(SimNet.java:719)
+	SimNet.main(SimNet.java:736)
+TRACE 64:
+	java.io.PrintStream.print(PrintStream.java:382)
+	SimNet$Node.doXmit(SimNet.java:313)
+	SimNet.simulate(SimNet.java:635)
+	SimNet.main(SimNet.java:719)
+TRACE 55:
+	java.io.PrintStream.write(PrintStream.java:267)
+	java.io.PrintStream.print(PrintStream.java:412)
+	SimNet$Node.doXmit(SimNet.java:314)
+	SimNet.simulate(SimNet.java:635)
+TRACE 50:
+	java.lang.StringBuffer.<init>(StringBuffer.java:116)
+	java.lang.StringBuffer.<init>(StringBuffer.java:104)
+	SimNet$Node.doXmit(SimNet.java:315)
+	SimNet.simulate(SimNet.java:635)
+TRACE 63:
+	java.lang.StrictMath.floor(StrictMath.java:Unknown line)
+	java.lang.Math.floor(Math.java:322)
+	java.lang.Math.round(Math.java:524)
+	Simulator.limit(Simulator.java:11)
+TRACE 42:
+	java.lang.FloatingDecimal.<init>(FloatingDecimal.java:425)
+	java.lang.Double.toString(Double.java:128)
+	java.lang.String.valueOf(String.java:2101)
+	java.io.PrintStream.print(PrintStream.java:382)
+TRACE 36:
+	java.lang.FloatingDecimal.<init>(FloatingDecimal.java:409)
+	java.lang.Double.toString(Double.java:128)
+	java.lang.String.valueOf(String.java:2101)
+	java.io.PrintStream.print(PrintStream.java:382)
+TRACE 124:
+	java.lang.String.valueOf(String.java:2040)
+	java.io.PrintStream.print(PrintStream.java:326)
+	Scatter.plot(Scatter.java:52)
+	SimNet.main(SimNet.java:732)
+TRACE 28:
+	java.lang.StringBuffer.toString(StringBuffer.java:1068)
+	SimNet$Node.doXmit(SimNet.java:316)
+	SimNet.simulate(SimNet.java:635)
+	SimNet.main(SimNet.java:719)
+TRACE 121:
+	java.io.PrintStream.write(PrintStream.java:266)
+	java.io.PrintStream.print(PrintStream.java:326)
+	Scatter.plot(Scatter.java:52)
+	SimNet.main(SimNet.java:732)
+TRACE 73:
+	SimNet$Node.doArrival(SimNet.java:370)
+	SimNet.simulate(SimNet.java:639)
+	SimNet.main(SimNet.java:719)
+	SimNet.main(SimNet.java:736)
+TRACE 92:
+	SimNet.queue(SimNet.java:549)
+	SimNet$Node.schedule(SimNet.java:225)
+	SimNet$Node.queueMsg(SimNet.java:235)
+	SimNet$Node.doArrival(SimNet.java:358)
+TRACE 101:
+	java.util.TreeMap.fixAfterInsertion(TreeMap.java:1250)
+	java.util.TreeMap.put(TreeMap.java:458)
+	SimNet.queue(SimNet.java:549)
+	SimNet$Node.schedule(SimNet.java:225)
+TRACE 60:
+	SimNet$Node.doXmit(SimNet.java:316)
+	SimNet.simulate(SimNet.java:635)
+	SimNet.main(SimNet.java:719)
+	SimNet.main(SimNet.java:736)
+TRACE 56:
+	java.io.BufferedWriter.flushBuffer(BufferedWriter.java:114)
+	java.io.PrintStream.write(PrintStream.java:268)
+	java.io.PrintStream.print(PrintStream.java:412)
+	SimNet$Node.doXmit(SimNet.java:316)
+TRACE 23:
+	java.io.FileInputStream.read(FileInputStream.java:Native method)
+	SimNet.readInt(SimNet.java:481)
+	SimNet$Node.readInput(SimNet.java:133)
+	SimNet.readInput(SimNet.java:521)
+TRACE 12:
+	SimNet.<init>(SimNet.java:445)
+	SimNet.main(SimNet.java:736)
+TRACE 76:
+	java.util.TreeMap.deleteEntry(TreeMap.java:1318)
+	java.util.TreeMap.remove(TreeMap.java:494)
+	SimNet.dequeue(SimNet.java:554)
+	SimNet.simulate(SimNet.java:628)
+TRACE 110:
+	java.lang.StringBuffer.toString(StringBuffer.java:1068)
+	Graph.draw(Graph.java:47)
+	SimNet.main(SimNet.java:726)
+	SimNet.main(SimNet.java:736)
+TRACE 91:
+	SimNet$Node.updateFrom(SimNet.java:392)
+	SimNet$Node.doUpdate(SimNet.java:381)
+	SimNet.simulate(SimNet.java:647)
+	SimNet.main(SimNet.java:719)
+TRACE 84:
+	java.lang.StringBuffer.toString(StringBuffer.java:1068)
+	SimNet$Node.doXmit(SimNet.java:314)
+	SimNet.simulate(SimNet.java:635)
+	SimNet.main(SimNet.java:719)
+TRACE 29:
+	SimNet$Node.doArrival(SimNet.java:348)
+	SimNet.simulate(SimNet.java:639)
+	SimNet.main(SimNet.java:719)
+	SimNet.main(SimNet.java:736)
+TRACE 119:
+	java.lang.String.valueOf(String.java:2040)
+	java.io.PrintStream.print(PrintStream.java:326)
+	Scatter.plot(Scatter.java:52)
+	SimNet.main(SimNet.java:731)
+TRACE 37:
+	java.lang.FloatingDecimal.dtoa(FloatingDecimal.java:781)
+	java.lang.FloatingDecimal.<init>(FloatingDecimal.java:445)
+	java.lang.Double.toString(Double.java:128)
+	java.lang.String.valueOf(String.java:2101)
+TRACE 26:
+	SimNet.initialSample(SimNet.java:575)
+	SimNet.simulate(SimNet.java:624)
+	SimNet.main(SimNet.java:719)
+	SimNet.main(SimNet.java:736)
+TRACE 120:
+	java.io.FileOutputStream.writeBytes(FileOutputStream.java:Unknown line)
+	java.io.FileOutputStream.write(FileOutputStream.java:212)
+	java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:72)
+	java.io.BufferedOutputStream.flush(BufferedOutputStream.java:130)
+TRACE 104:
+	java.lang.String.valueOf(String.java:2041)
+	java.io.PrintStream.print(PrintStream.java:326)
+	Scatter.plot(Scatter.java:52)
+	SimNet.report(SimNet.java:692)
+TRACE 57:
+	java.io.PrintStream.write(PrintStream.java:266)
+	java.io.PrintStream.print(PrintStream.java:382)
+	SimNet$Node.doXmit(SimNet.java:313)
+	SimNet.simulate(SimNet.java:635)
+TRACE 7:
+	java.lang.Class.forName0(Class.java:Native method)
+	java.lang.Class.forName(Class.java:120)
+	java.security.Policy.getPolicyNoCheck(Policy.java:157)
+	java.security.SecureClassLoader.getPermissions(SecureClassLoader.java:138)
+TRACE 6:
+	java.security.Security.loadProviders(Security.java:133)
+	java.security.Security.initialize(Security.java:95)
+	java.security.Security.access$000(Security.java:26)
+	java.security.Security$1.run(Security.java:65)
+TRACE 69:
+	sun.io.CharToByteSingleByte.getNative(CharToByteSingleByte.java:212)
+	sun.io.CharToByteSingleByte.convert(CharToByteSingleByte.java:167)
+	sun.io.CharToByteConverter.convertAny(CharToByteConverter.java:142)
+	java.io.OutputStreamWriter.write(OutputStreamWriter.java:167)
+TRACE 95:
+	SimNet.dequeue(SimNet.java:554)
+	SimNet.simulate(SimNet.java:628)
+	SimNet.main(SimNet.java:719)
+	SimNet.main(SimNet.java:736)
+TRACE 17:
+	java.io.FileInputStream.read(FileInputStream.java:Native method)
+	SimNet.readInt(SimNet.java:481)
+	SimNet$Node.readInput(SimNet.java:125)
+	SimNet.readInput(SimNet.java:521)
+TRACE 94:
+	java.util.TreeMap.put(TreeMap.java:457)
+	SimNet.queue(SimNet.java:549)
+	SimNet$Node.propagate(SimNet.java:181)
+	SimNet$Node.doXmit(SimNet.java:334)
+TRACE 116:
+	java.lang.String.valueOf(String.java:2040)
+	java.io.PrintStream.print(PrintStream.java:326)
+	Scatter.plot(Scatter.java:52)
+	SimNet.main(SimNet.java:730)
+TRACE 112:
+	Scatter.plot(Scatter.java:49)
+	SimNet.main(SimNet.java:729)
+	SimNet.main(SimNet.java:736)
+TRACE 31:
+	java.lang.Integer.toString(Integer.java:328)
+	java.lang.Integer.toString(Integer.java:108)
+	java.lang.String.valueOf(String.java:2056)
+	java.lang.StringBuffer.append(StringBuffer.java:515)
+TRACE 117:
+	java.io.PrintStream.write(PrintStream.java:222)
+	java.io.OutputStreamWriter.flushBuffer(OutputStreamWriter.java:230)
+	java.io.PrintStream.write(PrintStream.java:269)
+	java.io.PrintStream.print(PrintStream.java:326)
+TRACE 54:
+	java.util.TreeMap.fixAfterDeletion(TreeMap.java:1350)
+	java.util.TreeMap.deleteEntry(TreeMap.java:1323)
+	java.util.TreeMap.remove(TreeMap.java:494)
+	SimNet.dequeue(SimNet.java:554)
+TRACE 2:
+	java.security.AccessController.doPrivileged(AccessController.java:Native method)
+	java.net.URLClassLoader.findClass(URLClassLoader.java:188)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:297)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:290)
+TRACE 122:
+	java.io.BufferedWriter.flushBuffer(BufferedWriter.java:111)
+	java.io.PrintStream.write(PrintStream.java:268)
+	java.io.PrintStream.print(PrintStream.java:326)
+	Scatter.plot(Scatter.java:52)
+TRACE 1:
+	java.net.URLClassLoader.findClass(URLClassLoader.java:188)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:297)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:290)
+	sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:286)
+TRACE 3:
+	java.net.URLClassLoader.defineClass(URLClassLoader.java:247)
+	java.net.URLClassLoader.access$100(URLClassLoader.java:56)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:195)
+	java.security.AccessController.doPrivileged(AccessController.java:Native method)
+TRACE 71:
+	java.util.Random.nextDouble(Random.java:373)
+	SimNet.queue(SimNet.java:548)
+	SimNet$Node.propagate(SimNet.java:181)
+	SimNet$Node.queueMsg(SimNet.java:240)
+TRACE 19:
+	java.io.FileInputStream.read(FileInputStream.java:Native method)
+	SimNet.readInt(SimNet.java:483)
+	SimNet$Node.readInput(SimNet.java:116)
+	SimNet.readInput(SimNet.java:521)
+TRACE 74:
+	java.util.TreeMap.fixAfterDeletion(TreeMap.java:1348)
+	java.util.TreeMap.deleteEntry(TreeMap.java:1323)
+	java.util.TreeMap.remove(TreeMap.java:494)
+	SimNet.dequeue(SimNet.java:554)
+TRACE 114:
+	java.lang.String.valueOf(String.java:2040)
+	java.io.PrintStream.print(PrintStream.java:326)
+	Scatter.plot(Scatter.java:52)
+	SimNet.main(SimNet.java:729)
+TRACE 25:
+	java.lang.ClassLoader.findBootstrapClass(ClassLoader.java:Unknown line)
+	java.lang.ClassLoader.findBootstrapClass0(ClassLoader.java:677)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:292)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:290)
+TRACE 113:
+	Scatter.plot(Scatter.java:48)
+	SimNet.main(SimNet.java:729)
+	SimNet.main(SimNet.java:736)
+TRACE 96:
+	java.io.OutputStreamWriter.write(OutputStreamWriter.java:164)
+	java.io.BufferedWriter.flushBuffer(BufferedWriter.java:114)
+	java.io.PrintStream.write(PrintStream.java:268)
+	java.io.PrintStream.print(PrintStream.java:412)
+TRACE 99:
+	java.io.BufferedWriter.write(BufferedWriter.java:205)
+	java.io.Writer.write(Writer.java:129)
+	java.io.PrintStream.write(PrintStream.java:267)
+	java.io.PrintStream.print(PrintStream.java:412)
+TRACE 21:
+	java.io.FileInputStream.read(FileInputStream.java:Unknown line)
+	SimNet.readInt(SimNet.java:481)
+	SimNet$Node.readInput(SimNet.java:133)
+	SimNet.readInput(SimNet.java:521)
+TRACE 33:
+	java.io.FileOutputStream.writeBytes(FileOutputStream.java:Native method)
+	java.io.FileOutputStream.write(FileOutputStream.java:212)
+	java.io.PrintStream.write(PrintStream.java:222)
+	java.io.OutputStreamWriter.flushBuffer(OutputStreamWriter.java:230)
+TRACE 58:
+	java.io.FileOutputStream.write(FileOutputStream.java:212)
+	java.io.PrintStream.write(PrintStream.java:222)
+	java.io.OutputStreamWriter.flushBuffer(OutputStreamWriter.java:230)
+	java.io.PrintStream.write(PrintStream.java:269)
+TRACE 90:
+	java.lang.Double.doubleToLongBits(Double.java:Native method)
+	java.lang.FloatingDecimal.<init>(FloatingDecimal.java:393)
+	java.lang.Double.toString(Double.java:128)
+	java.lang.String.valueOf(String.java:2101)
+TRACE 62:
+	SimNet$Node.doArrival(SimNet.java:372)
+	SimNet.simulate(SimNet.java:639)
+	SimNet.main(SimNet.java:719)
+	SimNet.main(SimNet.java:736)
+TRACE 106:
+	Scatter.plot(Scatter.java:48)
+	SimNet.report(SimNet.java:692)
+	SimNet.main(SimNet.java:724)
+	SimNet.main(SimNet.java:736)
+CPU SAMPLES BEGIN (total = 259) Wed Nov 28 00:10:04 2001
+rank   self  accum   count trace method
+   1 20.46% 20.46%      53    33 java.io.FileOutputStream.writeBytes
+   2  8.88% 29.34%      23   105 java.io.FileOutputStream.writeBytes
+   3  3.86% 33.20%      10    48 java.lang.FloatingDecimal.toJavaFormatString
+   4  2.70% 35.91%       7    30 sun.io.CharToByteSingleByte.convert
+   5  1.93% 37.84%       5    68 SimNet$Node.propagate
+   6  1.54% 39.38%       4    46 SimNet$Node.schedule
+   7  1.54% 40.93%       4    69 sun.io.CharToByteSingleByte.getNative
+   8  1.54% 42.47%       4    18 java.io.FileInputStream.read
+   9  1.54% 44.02%       4    82 SimNet$Node.doXmit
+  10  1.16% 45.17%       3    35 SimNet$Node.doXmit
+  11  1.16% 46.33%       3    20 java.io.FileInputStream.read
+  12  1.16% 47.49%       3    28 java.lang.StringBuffer.toString
+  13  1.16% 48.65%       3   119 java.lang.String.valueOf
+  14  1.16% 49.81%       3    70 sun.io.CharToByteSingleByte.convert
+  15  1.16% 50.97%       3    43 java.lang.FloatingDecimal.toJavaFormatString
+  16  1.16% 52.12%       3    45 SimNet$Node.propagate
+  17  1.16% 53.28%       3    22 java.io.FileInputStream.read
+  18  1.16% 54.44%       3    47 java.io.BufferedWriter.write
+  19  0.77% 55.21%       2    40 java.lang.StringBuffer.toString
+  20  0.77% 55.98%       2    96 java.io.OutputStreamWriter.write
+  21  0.77% 56.76%       2    19 java.io.FileInputStream.read
+  22  0.77% 57.53%       2    91 SimNet$Node.updateFrom
+  23  0.77% 58.30%       2    63 java.lang.StrictMath.floor
+  24  0.77% 59.07%       2    39 java.lang.Double.compareTo
+  25  0.77% 59.85%       2    59 SimNet$Node.propagate
+  26  0.77% 60.62%       2    61 SimNet$Node.doXmit
+  27  0.77% 61.39%       2    50 java.lang.StringBuffer.<init>
+  28  0.77% 62.16%       2    51 java.io.FileOutputStream.writeBytes
+  29  0.77% 62.93%       2    64 java.io.PrintStream.print
+  30  0.77% 63.71%       2    60 SimNet$Node.doXmit
+  31  0.77% 64.48%       2   109 java.io.BufferedWriter.write
+  32  0.77% 65.25%       2    37 java.lang.FloatingDecimal.dtoa
+  33  0.77% 66.02%       2     5 java.util.Properties.load
+  34  0.77% 66.80%       2    65 sun.io.CharToByteSingleByte.convert
+  35  0.77% 67.57%       2    79 SimNet.queue
+  36  0.39% 67.95%       1     4 java.security.Security.<clinit>
+  37  0.39% 68.34%       1    32 SimNet$Node.schedule
+  38  0.39% 68.73%       1   103 java.util.TreeMap.put
+  39  0.39% 69.11%       1    66 SimNet.queue
+  40  0.39% 69.50%       1    98 java.lang.String.<init>
+  41  0.39% 69.88%       1    78 java.util.TreeMap.fixAfterInsertion
+  42  0.39% 70.27%       1    93 java.io.PrintStream.newLine
+  43  0.39% 70.66%       1   123 java.lang.String.valueOf
+  44  0.39% 71.04%       1    89 java.io.PrintStream.write
+  45  0.39% 71.43%       1    97 java.lang.StringBuffer.append
+  46  0.39% 71.81%       1     9 java.io.FilePermission.init
+  47  0.39% 72.20%       1    86 java.io.BufferedWriter.write
+  48  0.39% 72.59%       1    72 SimNet$Node.doXmit
+  49  0.39% 72.97%       1   118 java.io.OutputStreamWriter.write
+  50  0.39% 73.36%       1   102 java.lang.StringBuffer.append
+  51  0.39% 73.75%       1    88 java.util.TreeMap.put
+  52  0.39% 74.13%       1    14 java.lang.ClassLoader.findBootstrapClass
+  53  0.39% 74.52%       1    87 SimNet$Node.propagate
+  54  0.39% 74.90%       1   100 Simulator.limit
+  55  0.39% 75.29%       1   111 java.io.BufferedWriter.write
+  56  0.39% 75.68%       1    15 java.lang.ClassLoader.defineClass0
+  57  0.39% 76.06%       1    24 SimNet.readInt
+  58  0.39% 76.45%       1   115 java.lang.String.valueOf
+  59  0.39% 76.83%       1    67 java.util.TreeMap.put
+  60  0.39% 77.22%       1    11 SimNet.<init>
+  61  0.39% 77.61%       1    83 java.util.TreeMap.compare
+  62  0.39% 77.99%       1    49 java.lang.StrictMath.floor
+  63  0.39% 78.38%       1   108 java.lang.String.valueOf
+  64  0.39% 78.76%       1    77 java.util.TreeMap.put
+  65  0.39% 79.15%       1   107 java.io.OutputStreamWriter.flushBuffer
+  66  0.39% 79.54%       1    53 java.io.PrintStream.print
+  67  0.39% 79.92%       1    85 SimNet$Node.arrivalWait
+  68  0.39% 80.31%       1    75 SimNet$Node.doXmit
+  69  0.39% 80.70%       1    81 SimNet$Node.propagate
+  70  0.39% 81.08%       1   125 java.lang.String.valueOf
+  71  0.39% 81.47%       1    55 java.io.PrintStream.write
+  72  0.39% 81.85%       1    38 java.util.TreeMap.remove
+  73  0.39% 82.24%       1    34 Graph.count
+  74  0.39% 82.63%       1    42 java.lang.FloatingDecimal.<init>
+  75  0.39% 83.01%       1    36 java.lang.FloatingDecimal.<init>
+  76  0.39% 83.40%       1   124 java.lang.String.valueOf
+  77  0.39% 83.78%       1    52 java.lang.Integer.toString
+  78  0.39% 84.17%       1   121 java.io.PrintStream.write
+  79  0.39% 84.56%       1    73 SimNet$Node.doArrival
+  80  0.39% 84.94%       1    92 SimNet.queue
+  81  0.39% 85.33%       1   101 java.util.TreeMap.fixAfterInsertion
+  82  0.39% 85.71%       1    41 java.lang.FloatingDecimal.roundup
+  83  0.39% 86.10%       1    56 java.io.BufferedWriter.flushBuffer
+  84  0.39% 86.49%       1    23 java.io.FileInputStream.read
+  85  0.39% 86.87%       1     8 sun.net.www.protocol.file.Handler.openConnection
+  86  0.39% 87.26%       1    76 java.util.TreeMap.deleteEntry
+  87  0.39% 87.64%       1   110 java.lang.StringBuffer.toString
+  88  0.39% 88.03%       1    44 SimNet$Node.doUpdate
+  89  0.39% 88.42%       1    84 java.lang.StringBuffer.toString
+  90  0.39% 88.80%       1    29 SimNet$Node.doArrival
+  91  0.39% 89.19%       1     2 java.security.AccessController.doPrivileged
+  92  0.39% 89.58%       1   122 java.io.BufferedWriter.flushBuffer
+  93  0.39% 89.96%       1    62 SimNet$Node.doArrival
+  94  0.39% 90.35%       1   120 java.io.FileOutputStream.writeBytes
+  95  0.39% 90.73%       1   104 java.lang.String.valueOf
+  96  0.39% 91.12%       1    57 java.io.PrintStream.write
+  97  0.39% 91.51%       1     7 java.lang.Class.forName0
+  98  0.39% 91.89%       1     6 java.security.Security.loadProviders
+  99  0.39% 92.28%       1     3 java.net.URLClassLoader.defineClass
+ 100  0.39% 92.66%       1    95 SimNet.dequeue
+ 101  0.39% 93.05%       1    17 java.io.FileInputStream.read
+ 102  0.39% 93.44%       1    94 java.util.TreeMap.put
+ 103  0.39% 93.82%       1   116 java.lang.String.valueOf
+ 104  0.39% 94.21%       1   112 Scatter.plot
+ 105  0.39% 94.59%       1    31 java.lang.Integer.toString
+ 106  0.39% 94.98%       1   117 java.io.PrintStream.write
+ 107  0.39% 95.37%       1    54 java.util.TreeMap.fixAfterDeletion
+ 108  0.39% 95.75%       1    90 java.lang.Double.doubleToLongBits
+ 109  0.39% 96.14%       1   106 Scatter.plot
+ 110  0.39% 96.53%       1     1 java.net.URLClassLoader.findClass
+ 111  0.39% 96.91%       1   113 Scatter.plot
+ 112  0.39% 97.30%       1    71 java.util.Random.nextDouble
+ 113  0.39% 97.68%       1    74 java.util.TreeMap.fixAfterDeletion
+ 114  0.39% 98.07%       1   114 java.lang.String.valueOf
+ 115  0.39% 98.46%       1    25 java.lang.ClassLoader.findBootstrapClass
+ 116  0.39% 98.84%       1    58 java.io.FileOutputStream.write
+ 117  0.39% 99.23%       1    21 java.io.FileInputStream.read
+ 118  0.39% 99.61%       1    99 java.io.BufferedWriter.write
+ 119  0.39% 100.00%       1    80 SimNet$Node.schedule
+CPU SAMPLES END
