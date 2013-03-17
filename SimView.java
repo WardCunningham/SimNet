@@ -199,7 +199,7 @@ class MapPanel extends JPanel implements Runnable {
     }
 
     int f(int n) {
-        return (int)(n + Simulator.normal()*2);
+        return (int)(n + Simulator.normal());
     }
 
     static double n=51.5, w=127.0, e=64.5, s=23.5;
