@@ -78,7 +78,7 @@ class MapPanel extends JPanel implements Runnable {
     public void run() {
 		try {
             while (true) {
-                Thread.sleep(250);
+                Thread.sleep(50);
                 repaint();
             }
         }
