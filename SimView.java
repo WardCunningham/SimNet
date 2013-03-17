@@ -116,7 +116,7 @@ class MapPanel extends JPanel implements Runnable {
         }
 
         // paths in use
-        g.setColor(Color.yellow);
+        g.setStroke(new BasicStroke(5));
         for (int i=0; i<station.length; i++) {
             Point o = loc(station[i]);
             int p[] = station[i].path;
@@ -128,6 +128,7 @@ class MapPanel extends JPanel implements Runnable {
                 }
             }
         }
+        g.setStroke(new BasicStroke(1));
 
         // dots & bubbles
         for (int i=0; i<station.length; i++) {
