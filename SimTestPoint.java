@@ -16,10 +16,24 @@ class SimTestPoint extends TestPoint {
         Simulator.printTrace(out);
     }
 
-    void queueing () {
+    void queuing () {
         out.println("<font size=-1><pre>");
-        Simulator.queueing.report(out);
+        Simulator.queuing.report(out);
     }
+    void routing () {
+        out.println("<font size=-1><pre>");
+        Simulator.routing.report(out);
+    }
+    void delivery () {
+        out.println("<font size=-1><pre>");
+        Simulator.delivery.report(out);
+    }
+
+    void hops () {
+        out.println("<font size=-1><pre>");
+        Simulator.hops.report(out);
+    }
+
 
 }
 

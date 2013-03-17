@@ -17,9 +17,10 @@ public class SimNet extends Simulator implements Runnable {
 		}
 	}
 
+    static int ny = 10-1;		// new york
+    static int sf = 169-1;		// san francisco
+
 	void readInput() {
-		int ny = 10-1;		// new york
-		int sf = 169-1;		// san francisco
 
 		totalPop = 0;
 		for (int i=0; i<173; i++) {
@@ -74,7 +75,7 @@ public class SimNet extends Simulator implements Runnable {
             Thread.sleep(2000);
             while (true) {
                 simulate(0.02);     // minutes
-                Thread.sleep(20);   // milliseconds
+                Thread.sleep(50);   // milliseconds
             }
         } catch (InterruptedException e) {
             System.out.println(e.getMessage());
@@ -125,9 +126,6 @@ public class SimNet extends Simulator implements Runnable {
         try {in = new FileInputStream("data.txt");}
         catch (FileNotFoundException e) {throw new Error("data.txt not found");}
         readInput();
-        if(plotting) {
-            plotfil = output("plot");
-        }
         initialSample();
         initialArrivals();
     }
@@ -136,9 +134,6 @@ public class SimNet extends Simulator implements Runnable {
         while(!eventQueue.isEmpty()) {
 			thisEvent = dequeue();
 			trace("leftover", thisEvent);
-		}
-        if(plotting) {
-			plotfil.close();
 		}
 		report();
         super.report();

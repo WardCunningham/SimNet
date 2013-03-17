@@ -29,9 +29,8 @@ public class Simulator {
 	static double interArrival = 30.0;
 	static double arrivalTime = 2.0;
 	static boolean dynamic = true;	// load dependent routing
-	static boolean linked = false;	// trans-con link
+	static boolean linked = true;	// trans-con link
 	static boolean popBased = true;	// population based routing
-	static boolean plotting = false;	// message plot
 
 // major state
 
@@ -66,6 +65,13 @@ public class Simulator {
     static Trace traces[] = new Trace [200];
     static int nextTrace = 0;
 
+    static void halt (String err) {
+        trace("Halt", err);
+        printTrace();
+        System.err.println(err + " (see trace)");
+        System.exit(-1);
+    }
+
     static void printTrace() {
         PrintStream out;
         try {out = new PrintStream(new FileOutputStream("output/trace.html"));}
@@ -74,9 +80,9 @@ public class Simulator {
     }
 
     static void printTrace(PrintWriter out) {
+        out.println("<table CELLSPACING=0 CELLPADDING=2>");
         double clock=0;
         int tick=0;
-        out.println("<table CELLSPACING=0 CELLPADDING=2>");
         for (int i=nextTrace+1; (i%traces.length)!=nextTrace; i=(i+1)%traces.length) {
             Trace t = traces[i];
             if (t==null) continue;
@@ -154,7 +160,7 @@ public class Simulator {
 	static Graph transitTime = new Graph("transit time", 50.0);
 	static Graph hops = new Graph("hop count", 50);
 
-	static Scatter queueing = new Scatter("elapsed time", maxClock, "message queue length", 100.0);
+	static Scatter queuing = new Scatter("elapsed time", maxClock, "message queue length", 100.0);
 	static Scatter backlog = new Scatter("elapsed time", maxClock, "messages in transit", 300.0);
 	static Scatter routing = new Scatter("sample time", maxClock, "routing broadcasts", 10.0);
 	static Scatter delivery = new Scatter("start time", maxClock, "transit time", 50.0);
@@ -177,24 +183,32 @@ public class Simulator {
 		return rand.nextDouble();
 	}
 
-	static double exponential () {
-		return - Math.log(uniform());
-	}
+    static double exponential () {
+        return - Math.log(uniform());
+    }
 
-	static int limit (double r, int max) {
-		int i = (int)Math.round(r);
-		return i<0 ? 0 : i>=max ? max-1 : i;
-	}
+    static double normal () {
+        double sum=0;
+        for (int i = 0; i < 12; i++) {
+            sum += uniform();
+        }
+        return sum - 6.0;
+    }
 
-	static String w(String s, int w) {
-		return (s+"                       ").substring(0, w-1)+" ";
-	}
+    static int limit (double r, int max) {
+        int i = (int)Math.round(r);
+        return i<0 ? 0 : i>=max ? max-1 : i;
+    }
 
-	static String w(double d, int w) {
-		return w(Double.toString(d), w);
-	}
+    static String w(String s, int w) {
+        return (s+"                       ").substring(0, w-1)+" ";
+    }
 
-	static String w(int i, int w) {
-		return w(Integer.toString(i), w);
-	}
+    static String w(double d, int w) {
+        return w(Double.toString(d), w);
+    }
+
+    static String w(int i, int w) {
+        return w(Integer.toString(i), w);
+    }
 }

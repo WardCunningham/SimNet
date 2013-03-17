@@ -3,12 +3,12 @@ import java.io.*;
 
 public class Station extends Simulator {
     int nodeNum;		// ordinal number
-    int lastPath = 0;	// connectivity
+    int numPath = 0;	// connectivity
     int path[] = 		new int [maxPath];				// specific connections
     int zip[] = 		new int [maxLevel];				// this stations routing code
     int route[][] = 	new int [maxLevel][maxOrder];	// routing tables
-    int delay[][] = 	new int [maxLevel][maxOrder];
-    int promise[][] = 	new int [maxLevel][maxOrder];
+    int delay[][] = 	new int [maxLevel][maxOrder];   // most recent information about peers
+    int promise[][] = 	new int [maxLevel][maxOrder];   // last thing I promised
     boolean updating;	// update in progress
     Message nextMsg;	// message queue pointers
     Message lastMsg;
@@ -23,7 +23,7 @@ public class Station extends Simulator {
     int displacement;	// legend tweek for map
 
     void addPath(int city) {
-        path[lastPath++] = city;
+        path[numPath++] = city;
     }
 
     boolean hasMsg() {
@@ -114,27 +114,40 @@ public class Station extends Simulator {
 		return new String(assembly, 0, length);
 	}
 
-    void propagate() {
+    void scheduleUpdate() {
         if (!dynamic) return;
         if (updating) return;
-        trace("propagate", this);
+        trace("consider update", this);
         int load = queueLength + 1;
         for (int l=0; l<maxLevel; l++) {
             // look for changes
             for (int z=0; z<maxOrder; z++) {
-                double diff = (promise[l][z]-delay[l][z]-load)/(delay[l][z]+20);
-                updating |= (Math.abs(diff) > 0.10);
+                double now = delay[l][z]+load;
+                double past = promise[l][z];
+                if (past == 0) {
+                    updating = true;
+                } else {
+                    double diff = Math.abs(now-past)/past;
+                    updating |= diff > 0.20;
+                }
             }
         }
         if (!updating) return;
+
+        trace("schedule update", this);
+        for (int l=0; l<maxLevel; l++) {
+            for (int z=0; z<maxOrder; z++) {
+                promise[l][z] = delay[l][z]+load;
+            }
+        }
         queue(EventBlock.newUpdate(clock+0.2, nodeNum));
     }
 
-    void schedule() {
-        trace("schedule", this);
+    void scheduleMessage() {
+        trace("schedule message", this);
         // compute interference
         double success = 1.0;
-        for (int i=0; i<lastPath; i++) {
+        for (int i=0; i<numPath; i++) {
             if (station[path[i]].hasMsg()) {
                 success *= waitTime / (xmitTime + waitTime);
             }
@@ -156,15 +169,15 @@ public class Station extends Simulator {
         m.queued = clock;
         queueLength++;
         trace("queue", m);
-        queueing.mark (clock, queueLength);
+        queuing.mark (clock, queueLength);
         if (nextMsg == null) {
             nextMsg = m;
-            schedule();
+            scheduleMessage();
         } else {
             lastMsg.next = m;
         }
         lastMsg = m;
-        propagate();
+        scheduleUpdate();
     }
 
     Message dequeueMsg() {
@@ -175,7 +188,7 @@ public class Station extends Simulator {
         }
         queueLength--;
         trace("dequeue", msg);
-        queueing.mark(clock, queueLength);
+        queuing.mark(clock, queueLength);
         return msg;
     }
 
@@ -190,12 +203,60 @@ public class Station extends Simulator {
         return exponential()*t + arrivalTime;
     }
 
+  // routing table access
+
+    int delay (int i) {
+        return delay(station[i].zip);
+    }
+
+    int delay (int[] toZip) {
+        int z = zone(toZip);
+        return delay[z][toZip[z]];
+    }
+
+    int promise (int i) {
+        return promise(station[i].zip);
+    }
+
+    int promise (int[] toZip) {
+        int z = zone(toZip);
+        return promise[z][toZip[z]];
+    }
+
+    boolean[] pathsInUse () {
+        boolean result[] = new boolean[numPath];
+        for (Message m = nextMsg; m != null; m = m.next) {
+            if (m.destZip != zip) {
+                int hop = nextHop(m.destZip);
+                for (int i=0; i<numPath; i++) {
+                    if (path[i] == hop) {
+                        result[i] = true;
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    int nextHop (int i) {
+        return nextHop(station[i].zip);
+    }
+
     int nextHop (int[] toZip) {
+        int z = zone(toZip);
+        return route[z][toZip[z]];
+    }
+
+    int zone(int i) {
+        return zone(station[i].zip);
+    }
+
+    int zone(int[] toZip) {
         int i = 0;
         while (zip[i] == toZip[i]) {
             i++;
         }
-        return route[i][toZip[i]];
+        return i;
     }
 
 // events
@@ -203,7 +264,7 @@ public class Station extends Simulator {
     void doXmit () {
         Message thisMsg = dequeueMsg();
         if (nextMsg != null) {
-            schedule();
+            scheduleMessage();
         }
 
         boolean match = true;
@@ -222,13 +283,6 @@ public class Station extends Simulator {
             // en route
             int receiver = nextHop(thisMsg.destZip);
             trace("forward", station[receiver]);
-            if (plotting) {
-                plotfil.print(clock);
-                plotfil.print(" "+latatude);
-                plotfil.print(" "+longitude);
-                plotfil.print(" "+station[receiver].latatude);
-                plotfil.println(" "+station[receiver].longitude);
-            }
             if (station[receiver].queueLength < queueLimit) {
                 station[receiver].queueMsg(thisMsg);
                 thisMsg.hopCount++;
@@ -237,7 +291,7 @@ public class Station extends Simulator {
                 queueMsg(thisMsg);	// blocked (no ack) so retry
             }
         }
-        propagate();
+        scheduleUpdate();
     }
 
     void doArrival () {
@@ -272,7 +326,7 @@ public class Station extends Simulator {
     }
 
     void doUpdate () {
-        for (int i=0; i<lastPath; i++) {
+        for (int i=0; i<numPath; i++) {
             int receiver = path[i];
             station[receiver].updateFrom(nodeNum);
         }
@@ -284,33 +338,27 @@ public class Station extends Simulator {
         boolean change = false;
         for (int l=0; l<maxLevel; l++) {
             for (int z=0; z<maxOrder; z++) {
-                change = updateStation(sender, l, z, change);
+                int[] offer = station[sender].promise[l];
+                if (offer[z] != 0) {
+                  // known region
+                   if (offer[z] < delay[l][z] || route[l][z] == sender) {
+                       // better offer or current dest
+                       if (station[sender].route[l][z] != nodeNum) {
+                           // no flip
+                           trace("update", station[sender]);
+                           change |= delay[l][z] != offer[z];
+                           delay[l][z] = offer[z];
+                           route[l][z] = sender;
+                       }
+                   }
+               }
             }
             if (station[sender].zip[l] != zip[l]) {
                 break;
             }
         }
         if (change) {
-            propagate();
+            scheduleUpdate();
         }
     }
-
-    private boolean updateStation(int sender, int l, int z, boolean change) {
-        int[] offer = station[sender].promise[l];
-        if (offer[z] != 0) {
-          // known region
-           if (offer[z] < delay[l][z] || route[l][z] == sender) {
-               // better offer or current dest
-               if (station[sender].route[l][z] != nodeNum) {
-                   // no flip
-                   trace("update", station[sender]);
-                   change |= delay[l][z] != offer[z];
-                   delay[l][z] = offer[z];
-                   route[l][z] = sender;
-               }
-           }
-       }
-        return change;
-    }
-
 }

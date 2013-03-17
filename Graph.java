@@ -30,8 +30,12 @@ public class Graph extends Simulator {
 		counter[i]++;
 	}
 
-	void report () {
+    void report () {
         PrintStream out = output(label);
+        report (new PrintWriter(out));
+    }
+
+    void report (PrintWriter out){
 		out.println(runName);
 		out.println();
 		int max = 0;
