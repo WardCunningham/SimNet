@@ -87,7 +87,9 @@ class MapPanel extends JPanel implements Runnable {
         }
     }
 
-    public void paintComponent(Graphics g) {
+    public void paintComponent(Graphics gg) {
+        Graphics2D g = (Graphics2D)gg;
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
         super.paintComponent(g); //paint background
         Simulator.trace("paint", g.getClipBounds());
 
@@ -148,7 +150,8 @@ class MapPanel extends JPanel implements Runnable {
 
     }
 
-    private void rivertrace(Graphics g, Station[] station) {
+    private void rivertrace(Graphics gg, Station[] station) {
+        Graphics2D g = (Graphics2D)gg;
         g.setColor(Color.blue);
         for (int i=0; i<station.length; i++) {
             g.setColor(Color.blue);
@@ -158,7 +161,8 @@ class MapPanel extends JPanel implements Runnable {
         }
     }
 
-    private void trace(Graphics g) {
+    private void trace(Graphics gg) {
+        Graphics2D g = (Graphics2D)gg;
         for (int i=0; i<3; i++) {
             g.setColor(Color.blue);
             trace(1, g, from, to);
@@ -167,7 +171,7 @@ class MapPanel extends JPanel implements Runnable {
         }
     }
 
-    private void trace(int dir, Graphics g, int node, int goal) {
+    private void trace(int dir, Graphics2D g, int node, int goal) {
         Dimension d = getSize();
         Station[] station = SimView.sim.station;
         for (int i=0; node!=goal && i<40; i++) {
@@ -185,7 +189,9 @@ class MapPanel extends JPanel implements Runnable {
             // route segment
             Point o = loc(s);
             Point e = loc(station[next]);
+            g.setStroke(new BasicStroke(3));
             g.drawLine(f(o.x), f(o.y), f(e.x), f(e.y));
+            g.setStroke(new BasicStroke(1));
             if (diff) g.fillOval (f((o.x + e.x)/2-4), f((o.y + e.y)/2-4), 9, 9);
 
             node = next;
