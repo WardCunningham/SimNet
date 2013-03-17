@@ -26,7 +26,7 @@ public class Graph extends Simulator {
 		sum = sum + item;
 		sumsq = sumsq + item*item;
 		highest = item > highest ? item : highest;
-		int i = limit(item/maximum*maxCounter, maxCounter);
+		int i = limit((item/maximum)*maxCounter, maxCounter);
 		counter[i]++;
 	}
 
@@ -50,7 +50,7 @@ public class Graph extends Simulator {
 					out.print("      ");
 				}
 				if (i%5 == 0) {
-					out.print(w(i*maximum/maxColumn, 4));
+					out.print(w((i*maximum)/maxCounter, 4));
 				} else {
 					out.print("    ");
 				}

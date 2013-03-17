@@ -1,4 +1,4 @@
-JAVA PROFILE 1.0.1, created Mon Jan 28 19:08:02 2002
+JAVA PROFILE 1.0.1, created Mon Feb 04 08:11:54 2002
 
 Header for -Xhprof ASCII Output
 
@@ -66,473 +66,574 @@ THREAD START (obj=6f14b0, id = 1, name="Finalizer", group="system")
 THREAD START (obj=6f1350, id = 2, name="Reference Handler", group="system")
 THREAD START (obj=6f1260, id = 3, name="main", group="main")
 THREAD START (obj=6f2160, id = 4, name="HPROF CPU profiler", group="system")
-THREAD START (obj=6f3200, id = 5, name="Signal Dispatcher", group="system")
-THREAD START (obj=6f58c0, id = 6, name="CompileThread0", group="system")
+THREAD START (obj=6f68a0, id = 5, name="Signal Dispatcher", group="system")
+THREAD START (obj=6f6250, id = 6, name="CompileThread0", group="system")
 THREAD END (id = 3)
-THREAD START (obj=71e190, id = 7, name="Thread-0", group="main")
+THREAD START (obj=71eeb0, id = 7, name="Thread-0", group="main")
 THREAD END (id = 5)
-TRACE 18:
+TRACE 9:
 	<empty>
-TRACE 73:
-	java.io.PrintStream.write(PrintStream.java:269)
-	java.io.PrintStream.print(PrintStream.java:326)
-	Graph.report(Graph.java:55)
-	Simulator.report(Simulator.java:143)
-TRACE 2:
-	java.net.URLClassLoader.findClass(URLClassLoader.java:188)
-	java.lang.ClassLoader.loadClass(ClassLoader.java:297)
-	java.lang.ClassLoader.loadClass(ClassLoader.java:290)
-	sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:286)
-TRACE 29:
-	java.io.FileInputStream.read(FileInputStream.java:Unknown line)
-	Station.readInt(Station.java:83)
-	Station.readInput(Station.java:56)
-	SimNet.readInput(SimNet.java:27)
-TRACE 34:
-	java.io.FileInputStream.read(FileInputStream.java:Native method)
-	Station.readInt(Station.java:85)
-	Station.readInput(Station.java:64)
-	SimNet.readInput(SimNet.java:27)
-TRACE 1:
-	java.lang.Thread.setPriority0(Thread.java:Native method)
-	java.lang.Thread.setPriority(Thread.java:808)
-	java.lang.Thread.init(Thread.java:277)
-	java.lang.Thread.<init>(Thread.java:390)
-TRACE 48:
-	Graph.count(Graph.java:29)
-	Station.schedule(Station.java:147)
-	Station.queueMsg(Station.java:162)
-	Station.doXmit(Station.java:266)
-TRACE 38:
-	Simulator.trace(Simulator.java:97)
-	Simulator.trace(Simulator.java:107)
-	Simulator.queue(Simulator.java:120)
-	SimNet.initialSample(SimNet.java:53)
-TRACE 36:
-	java.io.FileInputStream.read(FileInputStream.java:Native method)
-	Station.readInt(Station.java:83)
-	Station.readInput(Station.java:46)
-	SimNet.readInput(SimNet.java:27)
-TRACE 67:
-	java.lang.Double.toString(Double.java:128)
-	java.lang.String.valueOf(String.java:2101)
-	java.lang.StringBuffer.append(StringBuffer.java:566)
-	SimNet.report(SimNet.java:93)
-TRACE 15:
-	sun.net.www.protocol.file.FileURLConnection.getPermission(FileURLConnection.java:236)
-	java.net.URLClassLoader.getPermissions(URLClassLoader.java:427)
-	sun.misc.Launcher$AppClassLoader.getPermissions(Launcher.java:294)
-	java.security.SecureClassLoader.getProtectionDomain(SecureClassLoader.java:162)
-TRACE 4:
-	java.net.URLClassLoader.defineClass(URLClassLoader.java:247)
-	java.net.URLClassLoader.access$100(URLClassLoader.java:56)
-	java.net.URLClassLoader$1.run(URLClassLoader.java:195)
-	java.security.AccessController.doPrivileged(AccessController.java:Native method)
-TRACE 63:
-	Station.propagate(Station.java:124)
-	Station.queueMsg(Station.java:167)
-	Station.doXmit(Station.java:266)
-	EventBlock.dispatch(EventBlock.java:56)
-TRACE 6:
-	java.util.Properties.load(Properties.java:189)
-	java.security.Security.initialize(Security.java:87)
-	java.security.Security.access$000(Security.java:26)
-	java.security.Security$1.run(Security.java:65)
-TRACE 30:
-	Station.readString(Station.java:111)
-	Station.readInput(Station.java:44)
-	SimNet.readInput(SimNet.java:27)
-	SimNet.setup(SimNet.java:128)
-TRACE 52:
-	Station.doUpdate(Station.java:308)
+TRACE 51:
+	java.util.TreeMap.put(TreeMap.java:463)
+	Simulator.queue(Simulator.java:128)
+	Station.scheduleUpdate(Station.java:143)
+	Station.updateFrom(Station.java:362)
+TRACE 31:
+	Station.scheduleUpdate(Station.java:139)
+	Station.updateFrom(Station.java:362)
+	Station.doUpdate(Station.java:331)
 	EventBlock.dispatch(EventBlock.java:68)
-	SimNet.dispatch(SimNet.java:69)
-	SimNet.simulate(SimNet.java:59)
-TRACE 78:
-	java.lang.FloatingDecimal.developLongDigits(FloatingDecimal.java:356)
-	java.lang.FloatingDecimal.dtoa(FloatingDecimal.java:552)
-	java.lang.FloatingDecimal.<init>(FloatingDecimal.java:445)
-	java.lang.Double.toString(Double.java:128)
-TRACE 59:
-	java.lang.Double.compareTo(Double.java:576)
-	java.util.TreeMap.compare(TreeMap.java:1047)
-	java.util.TreeMap.put(TreeMap.java:449)
-	Simulator.queue(Simulator.java:122)
-TRACE 19:
-	java.util.LinkedList.<init>(LinkedList.java:65)
-	Simulator.<clinit>(Simulator.java:138)
-TRACE 64:
-	Station.doArrival(Station.java:292)
+TRACE 47:
+	Simulator.queue(Simulator.java:128)
+	Station.scheduleUpdate(Station.java:143)
+	Station.updateFrom(Station.java:362)
+	Station.doUpdate(Station.java:331)
+TRACE 25:
 	EventBlock.dispatch(EventBlock.java:60)
 	SimNet.dispatch(SimNet.java:69)
 	SimNet.simulate(SimNet.java:59)
-TRACE 28:
-	java.io.FileInputStream.read(FileInputStream.java:Native method)
-	Station.readInt(Station.java:92)
-	Station.readInput(Station.java:56)
-	SimNet.readInput(SimNet.java:27)
-TRACE 22:
-	sun.misc.Resource.getBytes(Resource.java:65)
-	java.net.URLClassLoader.defineClass(URLClassLoader.java:245)
-	java.net.URLClassLoader.access$100(URLClassLoader.java:56)
-	java.net.URLClassLoader$1.run(URLClassLoader.java:195)
-TRACE 10:
-	java.lang.Class.forName0(Class.java:Native method)
-	java.lang.Class.forName(Class.java:120)
-	java.security.Policy.getPolicyNoCheck(Policy.java:157)
-	java.security.SecureClassLoader.getPermissions(SecureClassLoader.java:138)
+	SimNet.main(SimNet.java:145)
+TRACE 73:
+	Station.doXmit(Station.java:294)
+	EventBlock.dispatch(EventBlock.java:56)
+	SimNet.dispatch(SimNet.java:69)
+	SimNet.simulate(SimNet.java:59)
+TRACE 83:
+	Station.scheduleUpdate(Station.java:138)
+	Station.updateFrom(Station.java:362)
+	Station.doUpdate(Station.java:331)
+	EventBlock.dispatch(EventBlock.java:68)
+TRACE 12:
+	Scatter.<init>(Scatter.java:26)
+	Simulator.<clinit>(Simulator.java:166)
+TRACE 75:
+	java.util.TreeMap.fixAfterDeletion(TreeMap.java:1351)
+	java.util.TreeMap.deleteEntry(TreeMap.java:1323)
+	java.util.TreeMap.remove(TreeMap.java:494)
+	Simulator.dequeue(Simulator.java:133)
+TRACE 49:
+	Message.<init>(Message.java:7)
+	Station.doArrival(Station.java:298)
+	EventBlock.dispatch(EventBlock.java:60)
+	SimNet.dispatch(SimNet.java:69)
+TRACE 27:
+	java.util.TreeMap.put(TreeMap.java:462)
+	Simulator.queue(Simulator.java:128)
+	Station.scheduleUpdate(Station.java:143)
+	Station.updateFrom(Station.java:362)
+TRACE 78:
+	Station.dequeueMsg(Station.java:191)
+	Station.doXmit(Station.java:265)
+	EventBlock.dispatch(EventBlock.java:56)
+	SimNet.dispatch(SimNet.java:69)
+TRACE 90:
+	java.lang.String.valueOf(String.java:2040)
+	java.io.PrintWriter.print(PrintWriter.java:274)
+	Scatter.report(Scatter.java:64)
+	Scatter.report(Scatter.java:42)
+TRACE 84:
+	Station.scheduleUpdate(Station.java:124)
+	Station.doXmit(Station.java:294)
+	EventBlock.dispatch(EventBlock.java:56)
+	SimNet.dispatch(SimNet.java:69)
 TRACE 24:
-	SimNet.<init>(SimNet.java:15)
-	SimNet.main(SimNet.java:156)
-TRACE 47:
-	EventBlock.newXmit(EventBlock.java:36)
-	Station.schedule(Station.java:144)
-	Station.queueMsg(Station.java:162)
-	Station.doXmit(Station.java:266)
-TRACE 20:
-	Simulator.<clinit>(Simulator.java:152)
-TRACE 70:
-	SimNet.report(SimNet.java:109)
-	SimNet.finish(SimNet.java:144)
-	SimNet.main(SimNet.java:152)
-	SimNet.main(SimNet.java:156)
-TRACE 62:
-	java.util.TreeMap.compare(TreeMap.java:1047)
-	java.util.TreeMap.put(TreeMap.java:449)
-	Simulator.queue(Simulator.java:122)
-	Station.schedule(Station.java:151)
-TRACE 9:
-	java.lang.ClassLoader.findBootstrapClass(ClassLoader.java:Native method)
-	java.lang.ClassLoader.findBootstrapClass0(ClassLoader.java:677)
-	java.lang.ClassLoader.loadClass(ClassLoader.java:292)
-	java.lang.ClassLoader.loadClass(ClassLoader.java:290)
-TRACE 53:
+	java.util.TreeMap.put(TreeMap.java:444)
+	Simulator.queue(Simulator.java:128)
+	SimNet.initialSample(SimNet.java:53)
+	SimNet.setup(SimNet.java:129)
+TRACE 22:
+	SimNet.initialSample(SimNet.java:52)
+	SimNet.setup(SimNet.java:129)
+	SimNet.main(SimNet.java:144)
+	SimNet.main(SimNet.java:150)
+TRACE 3:
+	java.io.BufferedReader.readLine(BufferedReader.java:292)
+	java.io.BufferedReader.readLine(BufferedReader.java:362)
+	java.util.Properties.load(Properties.java:192)
+	java.security.Security.initialize(Security.java:87)
+TRACE 35:
+	Simulator.trace(Simulator.java:113)
+	SimNet.dispatch(SimNet.java:68)
+	SimNet.simulate(SimNet.java:59)
+	SimNet.main(SimNet.java:145)
+TRACE 32:
+	Station.scheduleUpdate(Station.java:130)
+	Station.updateFrom(Station.java:362)
+	Station.doUpdate(Station.java:331)
+	EventBlock.dispatch(EventBlock.java:68)
+TRACE 95:
+	java.io.FileOutputStream.open(FileOutputStream.java:Native method)
+	java.io.FileOutputStream.<init>(FileOutputStream.java:102)
+	java.io.FileOutputStream.<init>(FileOutputStream.java:62)
+	Simulator.printTrace(Simulator.java:77)
+TRACE 91:
+	java.lang.String.valueOf(String.java:2041)
+	java.io.PrintWriter.print(PrintWriter.java:274)
+	Scatter.report(Scatter.java:62)
+	Scatter.report(Scatter.java:42)
+TRACE 50:
 	java.lang.Double.doubleToLongBits(Double.java:Unknown line)
 	java.lang.Double.compareTo(Double.java:549)
 	java.lang.Double.compareTo(Double.java:576)
 	java.util.TreeMap.compare(TreeMap.java:1047)
-TRACE 7:
-	java.io.InputStreamReader.<init>(InputStreamReader.java:78)
-	java.util.Properties.load(Properties.java:189)
-	java.security.Security.initialize(Security.java:87)
-	java.security.Security.access$000(Security.java:26)
-TRACE 74:
-	java.lang.String.valueOf(String.java:2041)
-	java.io.PrintStream.print(PrintStream.java:326)
-	Graph.report(Graph.java:55)
-	Simulator.report(Simulator.java:143)
-TRACE 31:
-	java.io.FileInputStream.read(FileInputStream.java:Native method)
-	Station.readInt(Station.java:85)
-	Station.readInput(Station.java:48)
+TRACE 92:
+	java.io.PrintWriter.write(PrintWriter.java:213)
+	java.io.PrintWriter.write(PrintWriter.java:229)
+	java.io.PrintWriter.print(PrintWriter.java:274)
+	Scatter.report(Scatter.java:64)
+TRACE 38:
+	java.util.TreeMap.put(TreeMap.java:457)
+	Simulator.queue(Simulator.java:128)
+	Station.scheduleUpdate(Station.java:143)
+	Station.updateFrom(Station.java:362)
+TRACE 30:
+	Station.updateFrom(Station.java:340)
+	Station.doUpdate(Station.java:331)
+	EventBlock.dispatch(EventBlock.java:68)
+	SimNet.dispatch(SimNet.java:69)
+TRACE 42:
+	Station.arrivalWait(Station.java:198)
+	Station.doArrival(Station.java:322)
+	EventBlock.dispatch(EventBlock.java:60)
+	SimNet.dispatch(SimNet.java:69)
+TRACE 14:
+	Station.readInt(Station.java:83)
+	Station.readInput(Station.java:41)
 	SimNet.readInput(SimNet.java:27)
-TRACE 66:
-	Station.doXmit(Station.java:243)
+	SimNet.setup(SimNet.java:128)
+TRACE 89:
+	java.lang.FloatingDecimal.roundup(FloatingDecimal.java:385)
+	java.lang.FloatingDecimal.dtoa(FloatingDecimal.java:880)
+	java.lang.FloatingDecimal.<init>(FloatingDecimal.java:445)
+	java.lang.Double.toString(Double.java:128)
+TRACE 15:
+	java.io.FileInputStream.read(FileInputStream.java:Native method)
+	Station.readInt(Station.java:83)
+	Station.readInput(Station.java:64)
+	SimNet.readInput(SimNet.java:27)
+TRACE 45:
+	Station.scheduleUpdate(Station.java:130)
+	Station.queueMsg(Station.java:180)
+	Station.doXmit(Station.java:287)
 	EventBlock.dispatch(EventBlock.java:56)
+TRACE 2:
+	java.security.Policy.getPolicyNoCheck(Policy.java:146)
+	java.security.SecureClassLoader.getPermissions(SecureClassLoader.java:138)
+	java.net.URLClassLoader.getPermissions(URLClassLoader.java:420)
+	sun.misc.Launcher$AppClassLoader.getPermissions(Launcher.java:294)
+TRACE 86:
+	java.util.TreeMap.fixAfterDeletion(TreeMap.java:1395)
+	java.util.TreeMap.deleteEntry(TreeMap.java:1323)
+	java.util.TreeMap.remove(TreeMap.java:494)
+	Simulator.dequeue(Simulator.java:133)
+TRACE 48:
+	java.util.TreeMap.put(TreeMap.java:449)
+	Simulator.queue(Simulator.java:128)
+	Station.scheduleUpdate(Station.java:143)
+	Station.updateFrom(Station.java:362)
+TRACE 63:
+	java.util.TreeMap.compare(TreeMap.java:1047)
+	java.util.TreeMap.getEntry(TreeMap.java:331)
+	java.util.TreeMap.get(TreeMap.java:251)
+	Simulator.queueTime(Simulator.java:138)
+TRACE 34:
+	java.lang.Double.compareTo(Double.java:576)
+	java.util.TreeMap.compare(TreeMap.java:1047)
+	java.util.TreeMap.getEntry(TreeMap.java:331)
+	java.util.TreeMap.get(TreeMap.java:251)
+TRACE 43:
+	java.util.TreeMap.put(TreeMap.java:466)
+	Simulator.queue(Simulator.java:128)
+	Station.scheduleMessage(Station.java:164)
+	Station.queueMsg(Station.java:175)
+TRACE 29:
+	Station.doUpdate(Station.java:329)
+	EventBlock.dispatch(EventBlock.java:68)
 	SimNet.dispatch(SimNet.java:69)
 	SimNet.simulate(SimNet.java:59)
-TRACE 45:
-	java.lang.Math.log(Math.java:228)
-	Simulator.exponential(Simulator.java:181)
-	Station.arrivalWait(Station.java:190)
-	Station.doArrival(Station.java:301)
-TRACE 14:
-	sun.net.www.ParseUtil.<clinit>(ParseUtil.java:126)
-	sun.net.www.protocol.file.FileURLConnection.getPermission(FileURLConnection.java:232)
-	java.net.URLClassLoader.getPermissions(URLClassLoader.java:427)
-	sun.misc.Launcher$AppClassLoader.getPermissions(Launcher.java:294)
-TRACE 35:
+TRACE 74:
+	Message.<init>(Message.java:4)
+	Station.doArrival(Station.java:298)
+	EventBlock.dispatch(EventBlock.java:60)
+	SimNet.dispatch(SimNet.java:69)
+TRACE 79:
+	SimNet.dispatch(SimNet.java:65)
+	SimNet.simulate(SimNet.java:59)
+	SimNet.main(SimNet.java:145)
+	SimNet.main(SimNet.java:150)
+TRACE 41:
+	Simulator.queue(Simulator.java:128)
+	Station.scheduleUpdate(Station.java:143)
+	Station.doXmit(Station.java:294)
+	EventBlock.dispatch(EventBlock.java:56)
+TRACE 28:
+	java.util.TreeMap.fixAfterInsertion(TreeMap.java:1248)
+	java.util.TreeMap.put(TreeMap.java:467)
+	Simulator.queue(Simulator.java:128)
+	Station.scheduleUpdate(Station.java:143)
+TRACE 17:
+	java.io.FileInputStream.read(FileInputStream.java:Native method)
+	Station.readString(Station.java:111)
+	Station.readInput(Station.java:44)
+	SimNet.readInput(SimNet.java:27)
+TRACE 69:
+	Simulator.queue(Simulator.java:128)
+	Station.scheduleMessage(Station.java:164)
+	Station.queueMsg(Station.java:175)
+	Station.doXmit(Station.java:287)
+TRACE 82:
+	java.util.TreeMap.put(TreeMap.java:457)
+	Simulator.queue(Simulator.java:128)
+	Station.scheduleUpdate(Station.java:143)
+	Station.queueMsg(Station.java:180)
+TRACE 56:
+	Station.scheduleUpdate(Station.java:130)
+	Station.doXmit(Station.java:294)
+	EventBlock.dispatch(EventBlock.java:56)
+	SimNet.dispatch(SimNet.java:69)
+TRACE 1:
+	sun.misc.URLClassPath$FileLoader.getResource(URLClassPath.java:781)
+	sun.misc.URLClassPath.getResource(URLClassPath.java:138)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:192)
+	java.security.AccessController.doPrivileged(AccessController.java:Native method)
+TRACE 61:
+	Simulator.queue(Simulator.java:128)
+	Station.scheduleUpdate(Station.java:143)
+	Station.queueMsg(Station.java:180)
+	Station.doXmit(Station.java:287)
+TRACE 11:
+	Simulator.<clinit>(Simulator.java:163)
+TRACE 97:
+	sun.io.CharToByteSingleByte.getNative(CharToByteSingleByte.java:212)
+	sun.io.CharToByteSingleByte.convert(CharToByteSingleByte.java:167)
+	sun.io.CharToByteConverter.convertAny(CharToByteConverter.java:142)
+	java.io.OutputStreamWriter.write(OutputStreamWriter.java:167)
+TRACE 96:
+	Simulator$Trace.td(Simulator.java:61)
+	Simulator$Trace.toString(Simulator.java:53)
+	java.lang.String.valueOf(String.java:1947)
+	java.lang.StringBuffer.append(StringBuffer.java:370)
+TRACE 72:
+	java.util.Random.nextDouble(Random.java:373)
+	Simulator.queue(Simulator.java:127)
+	Station.scheduleUpdate(Station.java:143)
+	Station.updateFrom(Station.java:362)
+TRACE 37:
+	Station.updateFrom(Station.java:339)
+	Station.doUpdate(Station.java:331)
+	EventBlock.dispatch(EventBlock.java:68)
+	SimNet.dispatch(SimNet.java:69)
+TRACE 80:
+	Station.scheduleMessage(Station.java:150)
+	Station.doXmit(Station.java:267)
+	EventBlock.dispatch(EventBlock.java:56)
+	SimNet.dispatch(SimNet.java:69)
+TRACE 21:
 	java.io.FileInputStream.read(FileInputStream.java:Native method)
 	Station.readInt(Station.java:85)
 	Station.readInput(Station.java:56)
 	SimNet.readInput(SimNet.java:27)
-TRACE 46:
-	Station.propagate(Station.java:126)
-	Station.queueMsg(Station.java:167)
-	Station.doXmit(Station.java:266)
-	EventBlock.dispatch(EventBlock.java:56)
-TRACE 41:
-	Station.doArrival(Station.java:277)
+TRACE 7:
+	java.io.FilePermission.init(FilePermission.java:206)
+	java.io.FilePermission.<init>(FilePermission.java:256)
+	sun.net.www.protocol.file.FileURLConnection.getPermission(FileURLConnection.java:236)
+	java.net.URLClassLoader.getPermissions(URLClassLoader.java:427)
+TRACE 23:
+	Simulator.trace(Simulator.java:103)
+	Simulator.trace(Simulator.java:113)
+	Simulator.queue(Simulator.java:126)
+	SimNet.initialSample(SimNet.java:53)
+TRACE 18:
+	java.io.FileInputStream.read(FileInputStream.java:Native method)
+	Station.readInt(Station.java:92)
+	Station.readInput(Station.java:46)
+	SimNet.readInput(SimNet.java:27)
+TRACE 64:
+	java.util.TreeMap.firstEntry(TreeMap.java:1142)
+	java.util.TreeMap.firstKey(TreeMap.java:273)
+	Simulator.dequeue(Simulator.java:132)
+	SimNet.dispatch(SimNet.java:66)
+TRACE 26:
+	Station.doArrival(Station.java:298)
 	EventBlock.dispatch(EventBlock.java:60)
 	SimNet.dispatch(SimNet.java:69)
 	SimNet.simulate(SimNet.java:59)
-TRACE 54:
-	Simulator.queue(Simulator.java:122)
-	Station.schedule(Station.java:151)
-	Station.queueMsg(Station.java:162)
-	Station.doXmit(Station.java:266)
-TRACE 5:
-	java.io.Win32FileSystem.getBooleanAttributes(Win32FileSystem.java:Native method)
-	java.io.File.exists(File.java:548)
-	java.security.Security.initialize(Security.java:79)
-	java.security.Security.access$000(Security.java:26)
-TRACE 55:
-	Station.schedule(Station.java:138)
-	Station.doXmit(Station.java:239)
-	EventBlock.dispatch(EventBlock.java:56)
-	SimNet.dispatch(SimNet.java:69)
-TRACE 61:
-	java.util.TreeMap.fixAfterDeletion(TreeMap.java:1339)
-	java.util.TreeMap.deleteEntry(TreeMap.java:1323)
-	java.util.TreeMap.remove(TreeMap.java:494)
-	Simulator.dequeue(Simulator.java:127)
-TRACE 51:
-	java.util.TreeMap.fixAfterInsertion(TreeMap.java:1281)
-	java.util.TreeMap.put(TreeMap.java:467)
-	Simulator.queue(Simulator.java:122)
-	Station.schedule(Station.java:151)
-TRACE 50:
-	Station.schedule(Station.java:148)
-	Station.doXmit(Station.java:239)
-	EventBlock.dispatch(EventBlock.java:56)
-	SimNet.dispatch(SimNet.java:69)
-TRACE 44:
-	java.util.TreeMap.put(TreeMap.java:457)
-	Simulator.queue(Simulator.java:122)
-	Station.schedule(Station.java:151)
-	Station.queueMsg(Station.java:162)
-TRACE 77:
-	java.lang.String.valueOf(String.java:2041)
-	java.io.PrintWriter.print(PrintWriter.java:274)
-	Scatter.report(Scatter.java:64)
-	Scatter.report(Scatter.java:42)
-TRACE 17:
-	java.lang.ClassLoader.defineClass0(ClassLoader.java:Native method)
-	java.lang.ClassLoader.defineClass(ClassLoader.java:486)
-	java.security.SecureClassLoader.defineClass(SecureClassLoader.java:111)
-	java.net.URLClassLoader.defineClass(URLClassLoader.java:248)
-TRACE 60:
-	java.lang.StrictMath.floor(StrictMath.java:Native method)
-	java.lang.Math.floor(Math.java:322)
-	java.lang.Math.round(Math.java:524)
-	Simulator.limit(Simulator.java:193)
 TRACE 57:
-	Station.doArrival(Station.java:281)
-	EventBlock.dispatch(EventBlock.java:60)
+	java.lang.Double.compareTo(Double.java:576)
+	java.util.TreeMap.compare(TreeMap.java:1047)
+	java.util.TreeMap.put(TreeMap.java:449)
+	Simulator.queue(Simulator.java:128)
+TRACE 13:
+	SimNet.<init>(SimNet.java:15)
+	SimNet.main(SimNet.java:150)
+TRACE 65:
+	EventBlock.newXmit(EventBlock.java:36)
+	Station.scheduleMessage(Station.java:157)
+	Station.queueMsg(Station.java:175)
+	Station.doXmit(Station.java:287)
+TRACE 62:
+	EventBlock.doSample(EventBlock.java:81)
+	EventBlock.dispatch(EventBlock.java:64)
 	SimNet.dispatch(SimNet.java:69)
 	SimNet.simulate(SimNet.java:59)
-TRACE 27:
-	java.io.FileInputStream.read(FileInputStream.java:Unknown line)
-	Station.readInt(Station.java:83)
+TRACE 16:
+	java.io.FileInputStream.read(FileInputStream.java:Native method)
+	Station.readInt(Station.java:85)
 	Station.readInput(Station.java:64)
 	SimNet.readInput(SimNet.java:27)
-TRACE 68:
-	java.lang.StringBuffer.<init>(StringBuffer.java:116)
-	java.lang.StringBuffer.<init>(StringBuffer.java:104)
-	SimNet.report(SimNet.java:109)
-	SimNet.finish(SimNet.java:144)
-TRACE 16:
-	java.lang.ClassLoader.checkCerts(ClassLoader.java:511)
-	java.lang.ClassLoader.defineClass(ClassLoader.java:485)
-	java.security.SecureClassLoader.defineClass(SecureClassLoader.java:111)
-	java.net.URLClassLoader.defineClass(URLClassLoader.java:248)
-TRACE 39:
-	java.util.TreeMap.put(TreeMap.java:444)
-	Simulator.queue(Simulator.java:122)
-	SimNet.initialSample(SimNet.java:53)
-	SimNet.setup(SimNet.java:132)
-TRACE 23:
-	java.lang.ClassLoader.defineClass0(ClassLoader.java:Unknown line)
-	java.lang.ClassLoader.defineClass(ClassLoader.java:486)
-	java.security.SecureClassLoader.defineClass(SecureClassLoader.java:111)
-	java.net.URLClassLoader.defineClass(URLClassLoader.java:248)
-TRACE 69:
-	java.io.FileOutputStream.writeBytes(FileOutputStream.java:Native method)
-	java.io.FileOutputStream.write(FileOutputStream.java:212)
-	java.io.PrintStream.write(PrintStream.java:222)
-	java.io.OutputStreamWriter.flushBuffer(OutputStreamWriter.java:230)
-TRACE 65:
-	java.lang.StringBuffer.<init>(StringBuffer.java:117)
-	java.lang.StringBuffer.<init>(StringBuffer.java:104)
-	EventBlock.doSample(EventBlock.java:78)
-	EventBlock.dispatch(EventBlock.java:64)
-TRACE 71:
-	sun.io.CharToByteConverter.flushAny(CharToByteConverter.java:272)
-	java.io.OutputStreamWriter.flushBuffer(OutputStreamWriter.java:222)
-	java.io.PrintStream.newLine(PrintStream.java:288)
-	java.io.PrintStream.println(PrintStream.java:439)
-TRACE 8:
-	java.security.Security.loadProviders(Security.java:133)
-	java.security.Security.initialize(Security.java:95)
-	java.security.Security.access$000(Security.java:26)
-	java.security.Security$1.run(Security.java:65)
-TRACE 72:
-	java.io.FileOutputStream.open(FileOutputStream.java:Native method)
-	java.io.FileOutputStream.<init>(FileOutputStream.java:102)
-	java.io.FileOutputStream.<init>(FileOutputStream.java:62)
-	Simulator.output(Simulator.java:165)
-TRACE 25:
-	Station.<init>(Station.java:10)
-	SimNet.<init>(SimNet.java:15)
-	SimNet.main(SimNet.java:156)
-TRACE 49:
-	Simulator.trace(Simulator.java:107)
-	Station.queueMsg(Station.java:158)
-	Station.doXmit(Station.java:266)
-	EventBlock.dispatch(EventBlock.java:56)
-TRACE 43:
-	Station.schedule(Station.java:137)
-	Station.doXmit(Station.java:239)
-	EventBlock.dispatch(EventBlock.java:56)
-	SimNet.dispatch(SimNet.java:69)
-TRACE 42:
-	java.util.TreeMap.put(TreeMap.java:449)
-	Simulator.queue(Simulator.java:122)
-	Station.doArrival(Station.java:303)
-	EventBlock.dispatch(EventBlock.java:60)
-TRACE 11:
+TRACE 5:
 	sun.security.provider.PolicyFile.getPermissions(PolicyFile.java:789)
 	java.security.SecureClassLoader.getPermissions(SecureClassLoader.java:144)
 	java.net.URLClassLoader.getPermissions(URLClassLoader.java:420)
 	sun.misc.Launcher$AppClassLoader.getPermissions(Launcher.java:294)
-TRACE 75:
-	java.io.OutputStreamWriter.flushBuffer(OutputStreamWriter.java:231)
-	java.io.PrintStream.write(PrintStream.java:269)
-	java.io.PrintStream.print(PrintStream.java:412)
-	Graph.report(Graph.java:49)
-TRACE 33:
+TRACE 87:
+	java.util.AbstractMap.isEmpty(AbstractMap.java:77)
+	SimNet.simulate(SimNet.java:58)
+	SimNet.main(SimNet.java:145)
+	SimNet.main(SimNet.java:150)
+TRACE 76:
+	Station.queueMsg(Station.java:175)
+	Station.doArrival(Station.java:317)
+	EventBlock.dispatch(EventBlock.java:60)
+	SimNet.dispatch(SimNet.java:69)
+TRACE 59:
+	java.util.TreeMap.fixAfterInsertion(TreeMap.java:1263)
+	java.util.TreeMap.put(TreeMap.java:458)
+	Simulator.queue(Simulator.java:128)
+	Station.scheduleUpdate(Station.java:143)
+TRACE 19:
 	java.io.FileInputStream.read(FileInputStream.java:Native method)
 	Station.readInt(Station.java:92)
 	Station.readInput(Station.java:64)
 	SimNet.readInput(SimNet.java:27)
-TRACE 40:
-	Simulator.trace(Simulator.java:97)
-	Simulator.trace(Simulator.java:107)
-	Simulator.queue(Simulator.java:120)
-	SimNet.initialArrivals(SimNet.java:44)
-TRACE 58:
-	Station.propagate(Station.java:126)
-	Station.doXmit(Station.java:273)
-	EventBlock.dispatch(EventBlock.java:56)
-	SimNet.dispatch(SimNet.java:69)
-TRACE 32:
+TRACE 52:
+	java.util.TreeMap.put(TreeMap.java:466)
+	Simulator.queue(Simulator.java:128)
+	Station.scheduleUpdate(Station.java:143)
+	Station.doXmit(Station.java:294)
+TRACE 54:
+	Graph.count(Graph.java:29)
+	Station.scheduleMessage(Station.java:160)
+	Station.queueMsg(Station.java:175)
+	Station.doXmit(Station.java:287)
+TRACE 39:
+	EventBlock.newUpdate(EventBlock.java:30)
+	Station.scheduleUpdate(Station.java:143)
+	Station.updateFrom(Station.java:362)
+	Station.doUpdate(Station.java:331)
+TRACE 33:
+	Station.scheduleUpdate(Station.java:124)
+	Station.updateFrom(Station.java:362)
+	Station.doUpdate(Station.java:331)
+	EventBlock.dispatch(EventBlock.java:68)
+TRACE 20:
 	java.io.FileInputStream.read(FileInputStream.java:Native method)
-	Station.readInt(Station.java:83)
-	Station.readInput(Station.java:56)
+	Station.readInt(Station.java:92)
+	Station.readInput(Station.java:49)
 	SimNet.readInput(SimNet.java:27)
-TRACE 3:
-	java.io.FileInputStream.readBytes(FileInputStream.java:Native method)
-	java.io.FileInputStream.read(FileInputStream.java:183)
-	sun.misc.Resource.getBytes(Resource.java:67)
-	java.net.URLClassLoader.defineClass(URLClassLoader.java:245)
-TRACE 12:
-	sun.net.www.protocol.file.Handler.openConnection(Handler.java:60)
-	java.net.URL.openConnection(URL.java:781)
+TRACE 40:
+	java.util.TreeMap.fixAfterInsertion(TreeMap.java:1248)
+	java.util.TreeMap.put(TreeMap.java:458)
+	Simulator.queue(Simulator.java:128)
+	Station.scheduleMessage(Station.java:164)
+TRACE 67:
+	java.util.TreeMap.compare(TreeMap.java:1047)
+	java.util.TreeMap.getEntry(TreeMap.java:331)
+	java.util.TreeMap.remove(TreeMap.java:489)
+	Simulator.dequeue(Simulator.java:133)
+TRACE 94:
+	java.lang.FloatingDecimal.developLongDigits(FloatingDecimal.java:356)
+	java.lang.FloatingDecimal.dtoa(FloatingDecimal.java:552)
+	java.lang.FloatingDecimal.<init>(FloatingDecimal.java:445)
+	java.lang.Double.toString(Double.java:128)
+TRACE 88:
+	java.lang.FloatingDecimal.dtoa(FloatingDecimal.java:782)
+	java.lang.FloatingDecimal.<init>(FloatingDecimal.java:445)
+	java.lang.Double.toString(Double.java:128)
+	Simulator.w(Simulator.java:208)
+TRACE 77:
+	java.util.TreeMap.put(TreeMap.java:449)
+	Simulator.queue(Simulator.java:128)
+	EventBlock.doSample(EventBlock.java:82)
+	EventBlock.dispatch(EventBlock.java:64)
+TRACE 70:
+	java.util.TreeMap.getEntry(TreeMap.java:330)
+	java.util.TreeMap.get(TreeMap.java:251)
+	Simulator.queueTime(Simulator.java:138)
+	SimNet.simulate(SimNet.java:58)
+TRACE 44:
+	java.util.TreeMap.firstEntry(TreeMap.java:1142)
+	java.util.TreeMap.firstKey(TreeMap.java:273)
+	Simulator.queueTime(Simulator.java:137)
+	SimNet.simulate(SimNet.java:58)
+TRACE 71:
+	java.util.TreeMap.put(TreeMap.java:466)
+	Simulator.queue(Simulator.java:128)
+	Station.scheduleUpdate(Station.java:143)
+	Station.updateFrom(Station.java:362)
+TRACE 6:
+	sun.net.www.protocol.file.FileURLConnection.getPermission(FileURLConnection.java:232)
 	java.net.URLClassLoader.getPermissions(URLClassLoader.java:427)
 	sun.misc.Launcher$AppClassLoader.getPermissions(Launcher.java:294)
-TRACE 80:
-	Simulator.w(Simulator.java:198)
-	Simulator.w(Simulator.java:202)
-	Message.toString(Message.java:14)
-	Simulator$Trace.toString(Simulator.java:54)
-TRACE 26:
-	java.io.FileInputStream.read(FileInputStream.java:Native method)
-	Station.readInt(Station.java:85)
-	Station.readInput(Station.java:41)
-	SimNet.readInput(SimNet.java:27)
-TRACE 37:
-	SimNet.initialSample(SimNet.java:52)
-	SimNet.setup(SimNet.java:132)
-	SimNet.main(SimNet.java:150)
-	SimNet.main(SimNet.java:156)
-TRACE 21:
-	Simulator.<clinit>(Simulator.java:157)
-TRACE 76:
-	java.lang.StringBuffer.append(StringBuffer.java:494)
-	Scatter.report(Scatter.java:51)
-	Scatter.report(Scatter.java:42)
-	Simulator.report(Simulator.java:143)
-TRACE 56:
+	java.security.SecureClassLoader.getProtectionDomain(SecureClassLoader.java:162)
+TRACE 4:
+	java.lang.ClassLoader.findBootstrapClass(ClassLoader.java:Native method)
+	java.lang.ClassLoader.findBootstrapClass0(ClassLoader.java:677)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:292)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:290)
+TRACE 85:
+	java.lang.Double.compareTo(Double.java:549)
+	java.lang.Double.compareTo(Double.java:576)
+	java.util.TreeMap.compare(TreeMap.java:1047)
+	java.util.TreeMap.getEntry(TreeMap.java:331)
+TRACE 36:
+	Station.scheduleUpdate(Station.java:124)
+	Station.queueMsg(Station.java:180)
+	Station.doXmit(Station.java:287)
 	EventBlock.dispatch(EventBlock.java:56)
+TRACE 81:
+	Simulator.dequeue(Simulator.java:133)
+	SimNet.dispatch(SimNet.java:66)
+	SimNet.simulate(SimNet.java:59)
+	SimNet.main(SimNet.java:145)
+TRACE 66:
+	java.lang.Double.doubleToLongBits(Double.java:Native method)
+	java.lang.Double.compareTo(Double.java:549)
+	java.lang.Double.compareTo(Double.java:576)
+	java.util.TreeMap.compare(TreeMap.java:1047)
+TRACE 55:
+	java.lang.StrictMath.floor(StrictMath.java:Unknown line)
+	java.lang.Math.floor(Math.java:322)
+	java.lang.Math.round(Math.java:524)
+	Simulator.limit(Simulator.java:199)
+TRACE 10:
+	Simulator.<clinit>(Simulator.java:158)
+TRACE 58:
+	Simulator.queue(Simulator.java:128)
+	Station.scheduleMessage(Station.java:164)
+	Station.queueMsg(Station.java:175)
+	Station.doArrival(Station.java:317)
+TRACE 68:
+	java.lang.Double.compareTo(Double.java:576)
+	java.util.TreeMap.compare(TreeMap.java:1047)
+	java.util.TreeMap.getEntry(TreeMap.java:331)
+	java.util.TreeMap.remove(TreeMap.java:489)
+TRACE 53:
+	EventBlock.dispatch(EventBlock.java:68)
 	SimNet.dispatch(SimNet.java:69)
 	SimNet.simulate(SimNet.java:59)
-	SimNet.main(SimNet.java:151)
-TRACE 13:
-	java.net.URLConnection.<clinit>(URLConnection.java:975)
-	sun.net.www.protocol.file.Handler.openConnection(Handler.java:60)
-	java.net.URL.openConnection(URL.java:781)
-	java.net.URLClassLoader.getPermissions(URLClassLoader.java:427)
-TRACE 79:
-	java.io.FileOutputStream.writeBytes(FileOutputStream.java:Native method)
-	java.io.FileOutputStream.write(FileOutputStream.java:212)
-	java.io.PrintStream.write(PrintStream.java:222)
-	java.io.OutputStreamWriter.write(OutputStreamWriter.java:184)
-CPU SAMPLES BEGIN (total = 123) Mon Jan 28 19:08:07 2002
+	SimNet.main(SimNet.java:145)
+TRACE 46:
+	java.lang.Math.round(Math.java:524)
+	Simulator.limit(Simulator.java:199)
+	Scatter.mark(Scatter.java:37)
+	Station.dequeueMsg(Station.java:191)
+TRACE 60:
+	Simulator.queue(Simulator.java:127)
+	Station.scheduleUpdate(Station.java:143)
+	Station.queueMsg(Station.java:180)
+	Station.doXmit(Station.java:287)
+TRACE 8:
+	java.lang.ClassLoader.defineClass0(ClassLoader.java:Native method)
+	java.lang.ClassLoader.defineClass(ClassLoader.java:486)
+	java.security.SecureClassLoader.defineClass(SecureClassLoader.java:111)
+	java.net.URLClassLoader.defineClass(URLClassLoader.java:248)
+TRACE 93:
+	java.io.PrintWriter.print(PrintWriter.java:357)
+	Scatter.report(Scatter.java:58)
+	Scatter.report(Scatter.java:42)
+	Simulator.report(Simulator.java:149)
+CPU SAMPLES BEGIN (total = 227) Mon Feb 04 08:12:06 2002
 rank   self  accum   count trace method
-   1  9.76%  9.76%      12     3 java.io.FileInputStream.readBytes
-   2  8.13% 17.89%      10     9 java.lang.ClassLoader.findBootstrapClass
-   3  3.25% 21.14%       4    34 java.io.FileInputStream.read
-   4  3.25% 24.39%       4    47 EventBlock.newXmit
-   5  2.44% 26.83%       3    77 java.lang.String.valueOf
-   6  2.44% 29.27%       3    17 java.lang.ClassLoader.defineClass0
-   7  2.44% 31.71%       3    69 java.io.FileOutputStream.writeBytes
-   8  2.44% 34.15%       3    46 Station.propagate
-   9  2.44% 36.59%       3    33 java.io.FileInputStream.read
-  10  2.44% 39.02%       3    67 java.lang.Double.toString
-  11  2.44% 41.46%       3    32 java.io.FileInputStream.read
-  12  1.63% 43.09%       2    29 java.io.FileInputStream.read
-  13  1.63% 44.72%       2    53 java.lang.Double.doubleToLongBits
-  14  1.63% 46.34%       2    72 java.io.FileOutputStream.open
-  15  1.63% 47.97%       2    44 java.util.TreeMap.put
-  16  1.63% 49.59%       2    28 java.io.FileInputStream.read
-  17  1.63% 51.22%       2    39 java.util.TreeMap.put
-  18  1.63% 52.85%       2    58 Station.propagate
-  19  0.81% 53.66%       1    19 java.util.LinkedList.<init>
-  20  0.81% 54.47%       1    59 java.lang.Double.compareTo
-  21  0.81% 55.28%       1    78 java.lang.FloatingDecimal.developLongDigits
-  22  0.81% 56.10%       1    64 Station.doArrival
-  23  0.81% 56.91%       1    10 java.lang.Class.forName0
-  24  0.81% 57.72%       1    24 SimNet.<init>
-  25  0.81% 58.54%       1    22 sun.misc.Resource.getBytes
-  26  0.81% 59.35%       1     4 java.net.URLClassLoader.defineClass
-  27  0.81% 60.16%       1    70 SimNet.report
-  28  0.81% 60.98%       1    63 Station.propagate
-  29  0.81% 61.79%       1    15 sun.net.www.protocol.file.FileURLConnection.getPermission
-  30  0.81% 62.60%       1    30 Station.readString
-  31  0.81% 63.41%       1    52 Station.doUpdate
-  32  0.81% 64.23%       1    74 java.lang.String.valueOf
-  33  0.81% 65.04%       1    31 java.io.FileInputStream.read
-  34  0.81% 65.85%       1    62 java.util.TreeMap.compare
-  35  0.81% 66.67%       1    45 java.lang.Math.log
-  36  0.81% 67.48%       1    14 sun.net.www.ParseUtil.<clinit>
-  37  0.81% 68.29%       1     6 java.util.Properties.load
-  38  0.81% 69.11%       1    48 Graph.count
-  39  0.81% 69.92%       1    41 Station.doArrival
-  40  0.81% 70.73%       1    54 Simulator.queue
-  41  0.81% 71.54%       1     7 java.io.InputStreamReader.<init>
-  42  0.81% 72.36%       1    55 Station.schedule
-  43  0.81% 73.17%       1    61 java.util.TreeMap.fixAfterDeletion
-  44  0.81% 73.98%       1    51 java.util.TreeMap.fixAfterInsertion
-  45  0.81% 74.80%       1    50 Station.schedule
-  46  0.81% 75.61%       1    36 java.io.FileInputStream.read
-  47  0.81% 76.42%       1     1 java.lang.Thread.setPriority0
-  48  0.81% 77.24%       1     2 java.net.URLClassLoader.findClass
-  49  0.81% 78.05%       1    60 java.lang.StrictMath.floor
-  50  0.81% 78.86%       1    57 Station.doArrival
-  51  0.81% 79.67%       1    27 java.io.FileInputStream.read
-  52  0.81% 80.49%       1    68 java.lang.StringBuffer.<init>
-  53  0.81% 81.30%       1    16 java.lang.ClassLoader.checkCerts
-  54  0.81% 82.11%       1    35 java.io.FileInputStream.read
-  55  0.81% 82.93%       1    23 java.lang.ClassLoader.defineClass0
-  56  0.81% 83.74%       1    73 java.io.PrintStream.write
-  57  0.81% 84.55%       1    65 java.lang.StringBuffer.<init>
-  58  0.81% 85.37%       1    71 sun.io.CharToByteConverter.flushAny
-  59  0.81% 86.18%       1     8 java.security.Security.loadProviders
-  60  0.81% 86.99%       1    66 Station.doXmit
-  61  0.81% 87.80%       1    25 Station.<init>
-  62  0.81% 88.62%       1    49 Simulator.trace
-  63  0.81% 89.43%       1    43 Station.schedule
-  64  0.81% 90.24%       1    42 java.util.TreeMap.put
-  65  0.81% 91.06%       1    11 sun.security.provider.PolicyFile.getPermissions
-  66  0.81% 91.87%       1    75 java.io.OutputStreamWriter.flushBuffer
-  67  0.81% 92.68%       1     5 java.io.Win32FileSystem.getBooleanAttributes
-  68  0.81% 93.50%       1    40 Simulator.trace
-  69  0.81% 94.31%       1    26 java.io.FileInputStream.read
-  70  0.81% 95.12%       1    79 java.io.FileOutputStream.writeBytes
-  71  0.81% 95.94%       1    12 sun.net.www.protocol.file.Handler.openConnection
-  72  0.81% 96.75%       1    80 Simulator.w
-  73  0.81% 97.56%       1    13 java.net.URLConnection.<clinit>
-  74  0.81% 98.37%       1    76 java.lang.StringBuffer.append
-  75  0.81% 99.19%       1    21 Simulator.<clinit>
-  76  0.81% 100.00%       1    56 EventBlock.dispatch
+   1 24.67% 24.67%      56    30 Station.updateFrom
+   2 10.57% 35.24%      24    32 Station.scheduleUpdate
+   3  4.85% 40.09%      11    33 Station.scheduleUpdate
+   4  2.64% 42.73%       6    37 Station.updateFrom
+   5  2.20% 44.93%       5    19 java.io.FileInputStream.read
+   6  2.20% 47.14%       5    31 Station.scheduleUpdate
+   7  1.76% 48.90%       4     8 java.lang.ClassLoader.defineClass0
+   8  1.76% 50.66%       4    50 java.lang.Double.doubleToLongBits
+   9  1.32% 51.98%       3    56 Station.scheduleUpdate
+  10  1.32% 53.30%       3    66 java.lang.Double.doubleToLongBits
+  11  1.32% 54.63%       3    34 java.lang.Double.compareTo
+  12  1.32% 55.95%       3    45 Station.scheduleUpdate
+  13  1.32% 57.27%       3    16 java.io.FileInputStream.read
+  14  1.32% 58.59%       3    17 java.io.FileInputStream.read
+  15  1.32% 59.91%       3    39 EventBlock.newUpdate
+  16  1.32% 61.23%       3    95 java.io.FileOutputStream.open
+  17  0.88% 62.11%       2    47 Simulator.queue
+  18  0.88% 63.00%       2    84 Station.scheduleUpdate
+  19  0.88% 63.88%       2    43 java.util.TreeMap.put
+  20  0.88% 64.76%       2    70 java.util.TreeMap.getEntry
+  21  0.88% 65.64%       2    65 EventBlock.newXmit
+  22  0.88% 66.52%       2    57 java.lang.Double.compareTo
+  23  0.88% 67.40%       2     4 java.lang.ClassLoader.findBootstrapClass
+  24  0.88% 68.28%       2    38 java.util.TreeMap.put
+  25  0.88% 69.16%       2    15 java.io.FileInputStream.read
+  26  0.88% 70.04%       2    36 Station.scheduleUpdate
+  27  0.88% 70.93%       2    55 java.lang.StrictMath.floor
+  28  0.88% 71.81%       2    63 java.util.TreeMap.compare
+  29  0.88% 72.69%       2    54 Graph.count
+  30  0.44% 73.13%       1    92 java.io.PrintWriter.write
+  31  0.44% 73.57%       1    89 java.lang.FloatingDecimal.roundup
+  32  0.44% 74.01%       1    14 Station.readInt
+  33  0.44% 74.45%       1    42 Station.arrivalWait
+  34  0.44% 74.89%       1    90 java.lang.String.valueOf
+  35  0.44% 75.33%       1    24 java.util.TreeMap.put
+  36  0.44% 75.77%       1    27 java.util.TreeMap.put
+  37  0.44% 76.21%       1    49 Message.<init>
+  38  0.44% 76.65%       1    74 Message.<init>
+  39  0.44% 77.09%       1    86 java.util.TreeMap.fixAfterDeletion
+  40  0.44% 77.53%       1     2 java.security.Policy.getPolicyNoCheck
+  41  0.44% 77.97%       1    48 java.util.TreeMap.put
+  42  0.44% 78.41%       1    75 java.util.TreeMap.fixAfterDeletion
+  43  0.44% 78.85%       1    69 Simulator.queue
+  44  0.44% 79.30%       1    82 java.util.TreeMap.put
+  45  0.44% 79.74%       1    78 Station.dequeueMsg
+  46  0.44% 80.18%       1    35 Simulator.trace
+  47  0.44% 80.62%       1    61 Simulator.queue
+  48  0.44% 81.06%       1    79 SimNet.dispatch
+  49  0.44% 81.50%       1    83 Station.scheduleUpdate
+  50  0.44% 81.94%       1    96 Simulator$Trace.td
+  51  0.44% 82.38%       1    72 java.util.Random.nextDouble
+  52  0.44% 82.82%       1    73 Station.doXmit
+  53  0.44% 83.26%       1    80 Station.scheduleMessage
+  54  0.44% 83.70%       1    21 java.io.FileInputStream.read
+  55  0.44% 84.14%       1     7 java.io.FilePermission.init
+  56  0.44% 84.58%       1     3 java.io.BufferedReader.readLine
+  57  0.44% 85.02%       1    18 java.io.FileInputStream.read
+  58  0.44% 85.46%       1    64 java.util.TreeMap.firstEntry
+  59  0.44% 85.90%       1    26 Station.doArrival
+  60  0.44% 86.34%       1    91 java.lang.String.valueOf
+  61  0.44% 86.78%       1    28 java.util.TreeMap.fixAfterInsertion
+  62  0.44% 87.22%       1    12 Scatter.<init>
+  63  0.44% 87.67%       1    62 EventBlock.doSample
+  64  0.44% 88.11%       1    25 EventBlock.dispatch
+  65  0.44% 88.55%       1     5 sun.security.provider.PolicyFile.getPermissions
+  66  0.44% 88.99%       1    87 java.util.AbstractMap.isEmpty
+  67  0.44% 89.43%       1    76 Station.queueMsg
+  68  0.44% 89.87%       1    59 java.util.TreeMap.fixAfterInsertion
+  69  0.44% 90.31%       1    51 java.util.TreeMap.put
+  70  0.44% 90.75%       1    52 java.util.TreeMap.put
+  71  0.44% 91.19%       1     1 sun.misc.URLClassPath$FileLoader.getResource
+  72  0.44% 91.63%       1    29 Station.doUpdate
+  73  0.44% 92.07%       1    41 Simulator.queue
+  74  0.44% 92.51%       1    20 java.io.FileInputStream.read
+  75  0.44% 92.95%       1    40 java.util.TreeMap.fixAfterInsertion
+  76  0.44% 93.39%       1    67 java.util.TreeMap.compare
+  77  0.44% 93.83%       1    94 java.lang.FloatingDecimal.developLongDigits
+  78  0.44% 94.27%       1    88 java.lang.FloatingDecimal.dtoa
+  79  0.44% 94.71%       1    77 java.util.TreeMap.put
+  80  0.44% 95.15%       1    97 sun.io.CharToByteSingleByte.getNative
+  81  0.44% 95.59%       1    44 java.util.TreeMap.firstEntry
+  82  0.44% 96.04%       1    71 java.util.TreeMap.put
+  83  0.44% 96.48%       1     6 sun.net.www.protocol.file.FileURLConnection.getPermission
+  84  0.44% 96.92%       1    58 Simulator.queue
+  85  0.44% 97.36%       1    85 java.lang.Double.compareTo
+  86  0.44% 97.80%       1    68 java.lang.Double.compareTo
+  87  0.44% 98.24%       1    81 Simulator.dequeue
+  88  0.44% 98.68%       1    53 EventBlock.dispatch
+  89  0.44% 99.12%       1    60 Simulator.queue
+  90  0.44% 99.56%       1    46 java.lang.Math.round
+  91  0.44% 100.00%       1    93 java.io.PrintWriter.print
 CPU SAMPLES END

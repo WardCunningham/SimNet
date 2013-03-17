@@ -21,7 +21,7 @@ public class EventBlock extends Simulator {
     }
 
     public String toString() {
-        String result = "EventBlock("+eventNames[type]+" "+w(time,8);
+        String result = eventNames[type]+"("+w(time,8);
         if (node>=0) result += " "+station[node];
         return result+")";
     }

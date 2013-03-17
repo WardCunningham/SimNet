@@ -117,7 +117,7 @@ public class Station extends Simulator {
     void scheduleUpdate() {
         if (!dynamic) return;
         if (updating) return;
-        trace("consider update", this);
+        // trace("consider update", this);
         int load = queueLength + 1;
         for (int l=0; l<maxLevel; l++) {
             // look for changes
@@ -134,7 +134,7 @@ public class Station extends Simulator {
         }
         if (!updating) return;
 
-        trace("schedule update", this);
+        // trace("schedule update", this);
         for (int l=0; l<maxLevel; l++) {
             for (int z=0; z<maxOrder; z++) {
                 promise[l][z] = delay[l][z]+load;
@@ -253,7 +253,7 @@ public class Station extends Simulator {
 
     int zone(int[] toZip) {
         int i = 0;
-        while (zip[i] == toZip[i]) {
+        while (i < (maxLevel-1) && zip[i] == toZip[i]) {
             i++;
         }
         return i;
@@ -335,29 +335,30 @@ public class Station extends Simulator {
     }
 
     void updateFrom(int sender) {
-        boolean change = false;
-        for (int l=0; l<maxLevel; l++) {
-            for (int z=0; z<maxOrder; z++) {
-                int[] offer = station[sender].promise[l];
-                if (offer[z] != 0) {
+        int changes = 0;
+        for (int level=0; level<maxLevel; level++) {
+            for (int zip=0; zip<maxOrder; zip++) {
+                int[] offer = station[sender].promise[level];
+                if (offer[zip] != 0) {
                   // known region
-                   if (offer[z] < delay[l][z] || route[l][z] == sender) {
+                   if (offer[zip] < delay[level][zip] || route[level][zip] == sender) {
                        // better offer or current dest
-                       if (station[sender].route[l][z] != nodeNum) {
+                       if (station[sender].route[level][zip] != nodeNum) {
                            // no flip
-                           trace("update", station[sender]);
-                           change |= delay[l][z] != offer[z];
-                           delay[l][z] = offer[z];
-                           route[l][z] = sender;
+                           if (delay[level][zip] != offer[zip])
+                               changes++;
+                           delay[level][zip] = offer[zip];
+                           route[level][zip] = sender;
                        }
                    }
                }
             }
-            if (station[sender].zip[l] != zip[l]) {
+            if (station[sender].zip[level] != zip[level]) {
                 break;
             }
         }
-        if (change) {
+        if (changes > 0) {
+            // trace ("update from", station[sender], new Integer(changes));
             scheduleUpdate();
         }
     }

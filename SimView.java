@@ -89,7 +89,7 @@ class MapPanel extends JPanel implements Runnable {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g); //paint background
-        //Simulator.trace("paint", g.getClipBounds());
+        Simulator.trace("paint", g.getClipBounds());
 
         // background
         Dimension d = getSize();
@@ -98,9 +98,10 @@ class MapPanel extends JPanel implements Runnable {
         // labels & paths
         Station[] station = SimView.sim.station;
         g.setColor(Color.black);
+        g.drawString(station[from].city + " to " + station[to].city, 20, 15);
         for (int i=0; i<station.length; i++) {
             Point o = loc(station[i]);
-            if (d.height>400) {
+            if (d.height>800) {
                 g.drawString(station[i].city, o.x+6, o.y+5);
             }
             int p[] = station[i].path;
@@ -129,40 +130,63 @@ class MapPanel extends JPanel implements Runnable {
         // dots & bubbles
         for (int i=0; i<station.length; i++) {
             int queue = station[i].queueLength;
-            boolean updateing = station[i].updating;
-            g.setColor(updateing ? Color.magenta : queue>0 ? Color.yellow : Color.red);
+            g.setColor(queue>0 ? Color.yellow : Color.red);
             Point o = loc(station[i]);
             int r = (int)(Math.sqrt(queue+1)*5);
             g.fillOval(o.x-r, o.y-r, 2*r, 2*r);
             g.setColor(Color.black);
             g.drawOval(o.x-r, o.y-r, 2*r, 2*r);
+            if(station[i].updating) {
+                g.setColor(Color.yellow);
+                g.drawOval(o.x-r-2, o.y-r-2, 2*r+4, 2*r+4);
+            }
         }
 
         // traceroute
-        for (int i=0; i<3; i++) {
-            int node = from;
-            int goal = to;
+        trace(g);
+        // rivertrace(g, station);
+
+    }
+
+    private void rivertrace(Graphics g, Station[] station) {
+        g.setColor(Color.blue);
+        for (int i=0; i<station.length; i++) {
             g.setColor(Color.blue);
-            trace(1, g, node, goal, station);
+            trace(1, g, i, to);
             g.setColor(Color.green);
-            trace(-1, g, goal, node, station);
+            //trace(-1, g, to, i);
         }
     }
 
-    private void trace(int dir, Graphics g, int node, int goal, Station[] station) {
-        for (int i=0; node!=goal && i<30; i++) {
+    private void trace(Graphics g) {
+        for (int i=0; i<3; i++) {
+            g.setColor(Color.blue);
+            trace(1, g, from, to);
+            g.setColor(Color.green);
+            trace(-1, g, to, from);
+        }
+    }
+
+    private void trace(int dir, Graphics g, int node, int goal) {
+        Dimension d = getSize();
+        Station[] station = SimView.sim.station;
+        for (int i=0; node!=goal && i<40; i++) {
             Station s = station[node];
+            int next = s.nextHop(goal);
+            boolean diff = s.zone(goal) != station[next].zone(goal);
 
             // bar graph
-            int y = 3*i+5;
+            int x = d.width - 70 + 6*dir;
+            int y = d.height - (3*i+5);
             int dx = dir * (1+s.delay(goal));
-            g.drawLine(200, y, 200+dx, y);
+            g.drawLine(x, y, x+dx, y);
+            if(diff) g.fillOval(x-2-3*dir, y-2, 4, 4);
 
             // route segment
-            int next = s.nextHop(goal);
             Point o = loc(s);
             Point e = loc(station[next]);
             g.drawLine(f(o.x), f(o.y), f(e.x), f(e.y));
+            if (diff) g.fillOval (f((o.x + e.x)/2-4), f((o.y + e.y)/2-4), 9, 9);
 
             node = next;
       }

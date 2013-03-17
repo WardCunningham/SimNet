@@ -21,12 +21,12 @@ public class Simulator {
 
 // node buffer limit
 
-	static int queueLimit = 2000;
+	static int queueLimit = 95;
 
 // load specifications
 
 	static double lastArrival = 240.0;
-	static double interArrival = 30.0;
+	static double interArrival = 20.0;  // typ 30.0
 	static double arrivalTime = 2.0;
 	static boolean dynamic = true;	// load dependent routing
 	static boolean linked = true;	// trans-con link
@@ -162,7 +162,7 @@ public class Simulator {
 
 	static Scatter queuing = new Scatter("elapsed time", maxClock, "message queue length", 100.0);
 	static Scatter backlog = new Scatter("elapsed time", maxClock, "messages in transit", 300.0);
-	static Scatter routing = new Scatter("sample time", maxClock, "routing broadcasts", 10.0);
+	static Scatter routing = new Scatter("sample time", maxClock, "routing broadcasts", 500.0);
 	static Scatter delivery = new Scatter("start time", maxClock, "transit time", 50.0);
 
     static PrintStream output(String name) {
