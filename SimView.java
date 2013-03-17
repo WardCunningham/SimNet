@@ -133,15 +133,22 @@ class MapPanel extends JPanel implements Runnable {
         // dots & bubbles
         for (int i=0; i<station.length; i++) {
             int queue = station[i].queueLength;
-            g.setColor(queue>0 ? Color.yellow : Color.red);
             Point o = loc(station[i]);
-            int r = (int)(Math.sqrt(queue+1)*5);
+            int r = 4;
+            g.setColor(Color.red);
             g.fillOval(o.x-r, o.y-r, 2*r, 2*r);
             g.setColor(Color.black);
             g.drawOval(o.x-r, o.y-r, 2*r, 2*r);
             if(station[i].updating) {
-                g.setColor(Color.yellow);
+                g.setColor(Color.red);
                 g.drawOval(o.x-r-2, o.y-r-2, 2*r+4, 2*r+4);
+            }
+            r = (int)(Math.sqrt(queue+1)*5);
+            if (queue>1) {
+                g.setColor(new Color(255,255,0,150));
+                g.fillOval(o.x-r, o.y-r, 2*r, 2*r);
+                g.setColor(Color.black);
+                g.drawOval(o.x-r, o.y-r, 2*r, 2*r);
             }
         }
 
