@@ -1,5 +1,6 @@
 
 import java.io.PrintStream;
+import java.io.PrintWriter;
 
 public class Scatter extends Simulator {
 
@@ -38,6 +39,10 @@ public class Scatter extends Simulator {
 
 	void report () {
         PrintStream out = output(yLabel);
+        report (new PrintWriter(out));
+    }
+
+    void report (PrintWriter out){
 		out.println(runName);
 		out.println();
 		for (int i=maxYScat-1; i>=0; i--) {

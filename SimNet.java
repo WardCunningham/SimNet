@@ -1,8 +1,10 @@
 
+import javax.swing.*;
 import java.util.*;
 import java.io.*;
+import java.awt.*;
 
-public class SimNet extends Simulator {
+public class SimNet extends Simulator implements Runnable {
 
 
 // construction
@@ -50,28 +52,41 @@ public class SimNet extends Simulator {
 		queue(s);
 	}
 
-	void simulate() {
-		initialSample();
-		initialArrivals();
-
-		while (!eventQueue.isEmpty() && clock < maxClock) {
-			thisEvent = dequeue();
-			clock = thisEvent.time;
-            trace("dispatch", thisEvent);
-            thisEvent.dispatch();
-			eventCount++;
-		}
-		while(!eventQueue.isEmpty()) {
-			thisEvent = dequeue();
-			trace("leftover", thisEvent);
-		}
+	void simulate(double period) {
+        double endTime = clock + period;
+		while (!eventQueue.isEmpty() && queueTime()<endTime){
+            dispatch();
+        }
+        clock = endTime;
 	}
+
+    void dispatch() {
+        if (eventQueue.isEmpty()) return;
+        thisEvent = dequeue();
+        clock = thisEvent.time;
+        trace("dispatch", thisEvent);
+        thisEvent.dispatch();
+        eventCount++;
+    }
+
+    public void run() {
+        try {
+            Thread.sleep(2000);
+            while (true) {
+                simulate(0.02);     // minutes
+                Thread.sleep(20);   // milliseconds
+            }
+        } catch (InterruptedException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 
 // reporting
 
 	void report () {
         PrintStream out = output("summary");
-		Scatter throughput = new Scatter("traffic share", 500, "radio utilization", 100);
+		Scatter throughput = new Scatter("message count", 500, "radio utilization", 100);
 		out.println(runName);
 		out.println();
 		out.println(clock + " minutes simulated");
@@ -105,21 +120,35 @@ public class SimNet extends Simulator {
 
 // main
 
-	void main () {
-		out = System.out;
-		try {in = new FileInputStream("data.txt");}
-		catch (FileNotFoundException e) {throw new Error("data.txt not found");}
-		readInput();
-		if(plotting) {
+    void setup() {
+        out = System.out;
+        try {in = new FileInputStream("data.txt");}
+        catch (FileNotFoundException e) {throw new Error("data.txt not found");}
+        readInput();
+        if(plotting) {
             plotfil = output("plot");
+        }
+        initialSample();
+        initialArrivals();
+    }
+
+    void finish() {
+        while(!eventQueue.isEmpty()) {
+			thisEvent = dequeue();
+			trace("leftover", thisEvent);
 		}
-		simulate();
-		if(plotting) {
+        if(plotting) {
 			plotfil.close();
 		}
 		report();
         super.report();
-        saveTrace();
+        printTrace();
+    }
+
+	void main () {
+        setup();
+		simulate(maxClock);
+        finish();
 	}
 
 	public static void main (String[] argv) {

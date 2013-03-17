@@ -66,16 +66,20 @@ public class Simulator {
     static Trace traces[] = new Trace [200];
     static int nextTrace = 0;
 
-    static void saveTrace() {
+    static void printTrace() {
         PrintStream out;
-        double clock=0;
-        int tick=0;
         try {out = new PrintStream(new FileOutputStream("output/trace.html"));}
         catch (FileNotFoundException e) {out=System.out;}
+        printTrace(new PrintWriter(out));
+    }
+
+    static void printTrace(PrintWriter out) {
+        double clock=0;
+        int tick=0;
         out.println("<table CELLSPACING=0 CELLPADDING=2>");
-        for (int i=nextTrace; ((i+1)%traces.length)!=nextTrace; i=(i+1)%traces.length) {
+        for (int i=nextTrace+1; (i%traces.length)!=nextTrace; i=(i+1)%traces.length) {
             Trace t = traces[i];
-            if (t==null) break;
+            if (t==null) continue;
             if (t.time != clock) {
                 clock = t.time;
                 tick++;
@@ -84,6 +88,7 @@ public class Simulator {
             out.println("<tr bgcolor=" + color + ">" + t + "</tr>");
         }
         out.println("</table>");
+        out.flush();
     }
 
     static void trace (String label, Object a, Object b) {
@@ -122,6 +127,12 @@ public class Simulator {
 		return (EventBlock)(eventQueue.remove(key));
 	}
 
+    static double queueTime() {
+        Double key = (Double)(eventQueue.firstKey());
+        EventBlock event = (EventBlock)(eventQueue.get(key));
+        return event.time;
+    }
+
 // reports
 
     static List reports = new LinkedList();
@@ -145,7 +156,7 @@ public class Simulator {
 
 	static Scatter queueing = new Scatter("elapsed time", maxClock, "message queue length", 100.0);
 	static Scatter backlog = new Scatter("elapsed time", maxClock, "messages in transit", 300.0);
-	static Scatter routing = new Scatter("sample time", maxClock, "routing broadcasts", 15.0);
+	static Scatter routing = new Scatter("sample time", maxClock, "routing broadcasts", 10.0);
 	static Scatter delivery = new Scatter("start time", maxClock, "transit time", 50.0);
 
     static PrintStream output(String name) {
