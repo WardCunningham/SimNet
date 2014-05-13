@@ -4,43 +4,43 @@ import java.util.*;
 
 public class Simulator {
 
-	static String runName = " population based load";
+    static String runName = " population based load";
 
 // sizes
 
-	static int maxPath = 9;
-	static int maxLevel = 3;
-	static int maxOrder = 9;
-	static int maxDelay = 255;
+    static int maxPath = 9;
+    static int maxLevel = 3;
+    static int maxOrder = 9;
+    static int maxDelay = 255;
     static double maxClock = 300.0;
 
 // xmit scheduling parameters
 
-	static double waitTime = 0.50;
-	static double xmitTime = 0.13;
+    static double waitTime = 0.50;
+    static double xmitTime = 0.13;
 
 // node buffer limit
 
-	static int queueLimit = 95;
+    static int queueLimit = 95;
 
 // load specifications
 
-	static double lastArrival = 240.0;
-	static double interArrival = 20.0;  // typ 30.0
-	static double arrivalTime = 2.0;
-	static boolean dynamic = true;	// load dependent routing
-	static boolean linked = true;	// trans-con link
-	static boolean popBased = true;	// population based routing
+    static double lastArrival = 240.0;
+    static double interArrival = 20.0;  // typ 30.0
+    static double arrivalTime = 2.0;
+    static boolean dynamic = true;  // load dependent routing
+    static boolean linked = true;   // trans-con link
+    static boolean popBased = true; // population based routing
 
 // major state
 
-	static double clock = 0.0;				// simulated time
-	static int meanPop = 0;	// mean population
-	static int totalPop = 0;				// total population
+    static double clock = 0.0;              // simulated time
+    static int meanPop = 0; // mean population
+    static int totalPop = 0;                // total population
 
-	static int eventCount = 0;				// sample statistics
-	static int msgCount = 0;
-	static int updateCount = 0;
+    static int eventCount = 0;              // sample statistics
+    static int msgCount = 0;
+    static int updateCount = 0;
 
 // tracing
 
@@ -119,19 +119,19 @@ public class Simulator {
 
 // event queue
 
-	static EventBlock thisEvent;		// event queue (holds blocks)
-	static SortedMap eventQueue = new TreeMap();
+    static EventBlock thisEvent;        // event queue (holds blocks)
+    static SortedMap eventQueue = new TreeMap();
 
     static void queue (EventBlock entry) {
-		trace("queue", entry);
-		double fuzz = rand.nextDouble()/1000.0;	// avoid collisions
-		eventQueue.put(new Double(entry.time + fuzz), entry);
-	}
+        trace("queue", entry);
+        double fuzz = rand.nextDouble()/1000.0; // avoid collisions
+        eventQueue.put(new Double(entry.time + fuzz), entry);
+    }
 
-	static EventBlock dequeue() {
-		Double key = (Double)(eventQueue.firstKey());
-		return (EventBlock)(eventQueue.remove(key));
-	}
+    static EventBlock dequeue() {
+        Double key = (Double)(eventQueue.firstKey());
+        return (EventBlock)(eventQueue.remove(key));
+    }
 
     static double queueTime() {
         Double key = (Double)(eventQueue.firstKey());
@@ -152,18 +152,18 @@ public class Simulator {
 
     static InputStream in;
     static PrintStream out;
-	static PrintStream plotfil;		// trace output for plot
-	static Station station[];					// all stations
+    static PrintStream plotfil;     // trace output for plot
+    static Station station[];                   // all stations
 
-	static Graph retrys = new Graph("retransmissions", 2.0);
-	static Graph queueTime = new Graph("queueing delay", 5.0);
-	static Graph transitTime = new Graph("transit time", 50.0);
-	static Graph hops = new Graph("hop count", 50);
+    static Graph retrys = new Graph("retransmissions", 2.0);
+    static Graph queueTime = new Graph("queueing delay", 5.0);
+    static Graph transitTime = new Graph("transit time", 50.0);
+    static Graph hops = new Graph("hop count", 50);
 
-	static Scatter queuing = new Scatter("elapsed time", maxClock, "message queue length", 100.0);
-	static Scatter backlog = new Scatter("elapsed time", maxClock, "messages in transit", 300.0);
-	static Scatter routing = new Scatter("sample time", maxClock, "routing broadcasts", 500.0);
-	static Scatter delivery = new Scatter("start time", maxClock, "transit time", 50.0);
+    static Scatter queuing = new Scatter("elapsed time", maxClock, "message queue length", 100.0);
+    static Scatter backlog = new Scatter("elapsed time", maxClock, "messages in transit", 300.0);
+    static Scatter routing = new Scatter("sample time", maxClock, "routing broadcasts", 500.0);
+    static Scatter delivery = new Scatter("start time", maxClock, "transit time", 50.0);
 
     static PrintStream output(String name) {
         String path = "output/" + name + ".txt";
@@ -179,9 +179,9 @@ public class Simulator {
 
     static Random rand = new Random();
 
-	static double uniform () {
-		return rand.nextDouble();
-	}
+    static double uniform () {
+        return rand.nextDouble();
+    }
 
     static double exponential () {
         return - Math.log(uniform());

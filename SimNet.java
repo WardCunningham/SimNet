@@ -9,57 +9,57 @@ public class SimNet extends Simulator implements Runnable {
 
 // construction
 
-	SimNet () {
-		station = new Station [173];
-		for (int i=0; i<station.length; i++) {
-			station[i] = new Station();
-			station[i].nodeNum = i;
-		}
-	}
+    SimNet () {
+        station = new Station [173];
+        for (int i=0; i<station.length; i++) {
+            station[i] = new Station();
+            station[i].nodeNum = i;
+        }
+    }
 
-    static int ny = 10-1;		// new york
-    static int sf = 169-1;		// san francisco
+    static int ny = 10-1;       // new york
+    static int sf = 169-1;      // san francisco
 
-	void readInput() {
+    void readInput() {
 
-		totalPop = 0;
-		for (int i=0; i<173; i++) {
-			station[i].readInput();
+        totalPop = 0;
+        for (int i=0; i<173; i++) {
+            station[i].readInput();
             totalPop += station[i].population;
-		}
-		meanPop = totalPop / station.length;
-		if (linked) {
-			station[ny].addPath(sf);
-			station[sf].addPath(ny);
-		}
-	}
+        }
+        meanPop = totalPop / station.length;
+        if (linked) {
+            station[ny].addPath(sf);
+            station[sf].addPath(ny);
+        }
+    }
 
 
 // simulation
 
-	void initialArrivals () {
-		for (int i=0; i<station.length; i++) {
-			EventBlock e = EventBlock.newArrival(clock + station[i].arrivalWait(), i);
-			if (e.time <= lastArrival) {
-				queue(e);
-			} else {
-				trace("no arrival", station[i]);
-			}
-		}
-	}
+    void initialArrivals () {
+        for (int i=0; i<station.length; i++) {
+            EventBlock e = EventBlock.newArrival(clock + station[i].arrivalWait(), i);
+            if (e.time <= lastArrival) {
+                queue(e);
+            } else {
+                trace("no arrival", station[i]);
+            }
+        }
+    }
 
-	void initialSample () {
-		EventBlock s = EventBlock.newSample(clock);
-		queue(s);
-	}
+    void initialSample () {
+        EventBlock s = EventBlock.newSample(clock);
+        queue(s);
+    }
 
-	void simulate(double period) {
+    void simulate(double period) {
         double endTime = clock + period;
-		while (!eventQueue.isEmpty() && queueTime()<endTime){
+        while (!eventQueue.isEmpty() && queueTime()<endTime){
             dispatch();
         }
         clock = endTime;
-	}
+    }
 
     void dispatch() {
         if (eventQueue.isEmpty()) return;
@@ -85,39 +85,39 @@ public class SimNet extends Simulator implements Runnable {
 
 // reporting
 
-	void report () {
+    void report () {
         PrintStream out = output("summary");
-		Scatter throughput = new Scatter("message count", 500, "radio utilization", 100);
-		out.println(runName);
-		out.println();
-		out.println(clock + " minutes simulated");
-		out.println(lastArrival + " last arrival");
-		out.println(interArrival + " mean inter-arrival period");
-		out.println(arrivalTime + " minimum inter-arrival period");
-		out.println(queueLimit + " buffer limit");
-		out.println(dynamic + " dynamic routing");
-		out.println(linked + " trans-con data link");
-		out.println(popBased + " population based (" + totalPop + ") load");
+        Scatter throughput = new Scatter("message count", 500, "radio utilization", 100);
+        out.println(runName);
+        out.println();
+        out.println(clock + " minutes simulated");
+        out.println(lastArrival + " last arrival");
+        out.println(interArrival + " mean inter-arrival period");
+        out.println(arrivalTime + " minimum inter-arrival period");
+        out.println(queueLimit + " buffer limit");
+        out.println(dynamic + " dynamic routing");
+        out.println(linked + " trans-con data link");
+        out.println(popBased + " population based (" + totalPop + ") load");
         out.println(transitTime.count + " messages delivered");
-		out.println();
-		out.println();
-		out.println(" message counts and utilizations");
-		for (int i=0; i<station.length; i++) {
-			if (i%5 == 0) {
-				out.println();
-			}
-			out.print(
-				w(station[i].useCount, 4) + " " +
-				w(station[i].useTime/clock*100.0, 5) + " " +
-				w(station[i].city, 14));
-			if(transitTime.count!=0) {
-				throughput.mark(
-					station[i].useCount,
-					station[i].useTime/clock*100.0);
-			}
-		}
-		out.println();
-	}
+        out.println();
+        out.println();
+        out.println(" message counts and utilizations");
+        for (int i=0; i<station.length; i++) {
+            if (i%5 == 0) {
+                out.println();
+            }
+            out.print(
+                w(station[i].useCount, 4) + " " +
+                w(station[i].useTime/clock*100.0, 5) + " " +
+                w(station[i].city, 14));
+            if(transitTime.count!=0) {
+                throughput.mark(
+                    station[i].useCount,
+                    station[i].useTime/clock*100.0);
+            }
+        }
+        out.println();
+    }
 
 // main
 
@@ -132,22 +132,22 @@ public class SimNet extends Simulator implements Runnable {
 
     void finish() {
         while(!eventQueue.isEmpty()) {
-			thisEvent = dequeue();
-			trace("leftover", thisEvent);
-		}
-		report();
+            thisEvent = dequeue();
+            trace("leftover", thisEvent);
+        }
+        report();
         super.report();
         printTrace();
     }
 
-	void main () {
+    void main () {
         setup();
-		simulate(maxClock);
+        simulate(maxClock);
         finish();
-	}
+    }
 
-	public static void main (String[] argv) {
-		(new SimNet()).main();
-	}
+    public static void main (String[] argv) {
+        (new SimNet()).main();
+    }
 }
 

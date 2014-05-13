@@ -2,25 +2,25 @@
 import java.io.*;
 
 public class Station extends Simulator {
-    int nodeNum;		// ordinal number
-    int numPath = 0;	// connectivity
-    int path[] = 		new int [maxPath];				// specific connections
-    int zip[] = 		new int [maxLevel];				// this stations routing code
-    int route[][] = 	new int [maxLevel][maxOrder];	// routing tables
-    int delay[][] = 	new int [maxLevel][maxOrder];   // most recent information about peers
-    int promise[][] = 	new int [maxLevel][maxOrder];   // last thing I promised
-    boolean updating;	// update in progress
-    Message nextMsg;	// message queue pointers
+    int nodeNum;        // ordinal number
+    int numPath = 0;    // connectivity
+    int path[] =        new int [maxPath];              // specific connections
+    int zip[] =         new int [maxLevel];             // this stations routing code
+    int route[][] =     new int [maxLevel][maxOrder];   // routing tables
+    int delay[][] =     new int [maxLevel][maxOrder];   // most recent information about peers
+    int promise[][] =   new int [maxLevel][maxOrder];   // last thing I promised
+    boolean updating;   // update in progress
+    Message nextMsg;    // message queue pointers
     Message lastMsg;
-    int queueLength;	// number in message queue
-    int useCount;		// message count for utilization
-    double useTime;		// time using or waiting to use channel
-    String city;		// unique city name
-    boolean tracing;	// debug output flag
-    int population;		// population in thousands
-    int	latatude;		// location;
+    int queueLength;    // number in message queue
+    int useCount;       // message count for utilization
+    double useTime;     // time using or waiting to use channel
+    String city;        // unique city name
+    boolean tracing;    // debug output flag
+    int population;     // population in thousands
+    int latatude;       // location;
     int longitude;
-    int displacement;	// legend tweek for map
+    int displacement;   // legend tweek for map
 
     void addPath(int city) {
         path[numPath++] = city;
@@ -77,42 +77,42 @@ public class Station extends Simulator {
 
 
     int readInt () {
-		int ch;
-		int assembly=0;
-		try {
-			ch = in.read();
-			while(ch==' ' || ch=='\n' || ch=='\r') {
-				ch = in.read();
-			}
-			if (ch == '-') {
-				return -readInt();
-			}
-			while(ch>='0' && ch<='9') {
-				assembly = assembly * 10 + (ch - '0');
-				ch = in.read();
-			}
-		} catch (IOException e) {};
-		return assembly;
-	}
+        int ch;
+        int assembly=0;
+        try {
+            ch = in.read();
+            while(ch==' ' || ch=='\n' || ch=='\r') {
+                ch = in.read();
+            }
+            if (ch == '-') {
+                return -readInt();
+            }
+            while(ch>='0' && ch<='9') {
+                assembly = assembly * 10 + (ch - '0');
+                ch = in.read();
+            }
+        } catch (IOException e) {};
+        return assembly;
+    }
 
-	String readString (int max) {
-		int ch, length=0;
-		char assembly[] = new char [max];
-		try {
-			ch = in.read();
-			while(ch==' ' || ch=='\n' || ch=='\r') {
-				ch = in.read();
-			}
-			for (int i=0; i<max; i++) {
-				assembly[i] = (char)ch;
-				if (!(ch==' ' || ch=='\n' || ch=='\r')) {
-					length = i+1;
-				}
-				ch = in.read();
-			}
-		} catch (IOException e) {};
-		return new String(assembly, 0, length);
-	}
+    String readString (int max) {
+        int ch, length=0;
+        char assembly[] = new char [max];
+        try {
+            ch = in.read();
+            while(ch==' ' || ch=='\n' || ch=='\r') {
+                ch = in.read();
+            }
+            for (int i=0; i<max; i++) {
+                assembly[i] = (char)ch;
+                if (!(ch==' ' || ch=='\n' || ch=='\r')) {
+                    length = i+1;
+                }
+                ch = in.read();
+            }
+        } catch (IOException e) {};
+        return new String(assembly, 0, length);
+    }
 
     void scheduleUpdate() {
         if (!dynamic) return;
@@ -288,7 +288,7 @@ public class Station extends Simulator {
                 thisMsg.hopCount++;
             } else {
                 trace("blocked by", station[receiver]);
-                queueMsg(thisMsg);	// blocked (no ack) so retry
+                queueMsg(thisMsg);  // blocked (no ack) so retry
             }
         }
         scheduleUpdate();
