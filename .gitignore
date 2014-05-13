@@ -3,6 +3,7 @@
 old
 export
 output
+reference/docs
 *.URL
 *.lnk
 *.swp
