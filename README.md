@@ -27,7 +27,7 @@ In 2002 I translated the Pascal program to Java
 and added a couple of new visualizations. On my 
 mac I run the interactive map view with this command:
 
-  javac SimView.java && java SimView
+    javac SimView.java && java SimView
 
 This displays a resizable basemap with a number of
 continuously updated marks:
