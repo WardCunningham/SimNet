@@ -45,6 +45,33 @@ class MapPanel extends JPanel implements Runnable {
     int from=SimNet.ny, to=SimNet.sf;
     public MapPanel(Image image) {
         this.usa = image;
+    
+        JCheckBox runButton = new JCheckBox("Run");
+        add(runButton);
+        runButton.setSelected(SimNet.run);
+        runButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                SimNet.run = ! SimNet.run;
+            }
+        });
+
+        JCheckBox linkButton = new JCheckBox("Link");
+        add(linkButton);
+        linkButton.setSelected(SimNet.linked);
+        linkButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                SimNet.linked = ! SimNet.linked;
+                if (SimNet.linked) {
+                    SimNet.station[from].addPath(to);
+                    SimNet.station[to].addPath(from);
+                } else {
+                    SimNet.station[from].removePath(to);
+                    SimNet.station[to].removePath(from);
+                }
+            }
+        });
+
+
         addMouseListener(new MouseAdapter() {
             public void mousePressed (MouseEvent e) {
                 from = hit(e.getPoint());
@@ -58,21 +85,32 @@ class MapPanel extends JPanel implements Runnable {
                 to = hit(e.getPoint());
             }
         });
-     }
+    }
 
-     int hit (Point p) {
-         Station s[] = SimNet.station;
-         int k=-1, z = 9999999;
-         for (int i = 0; i < s.length; i++) {
-             Point q = loc(s[i]);
-             int d = Math.abs(p.x-q.x) + Math.abs(p.y-q.y);
-             if (d<z) {
-                 k=i;
-                 z=d;
-             }
-         }
-         return k;
-     }
+    // public void itemStateChanged(ItemEvent e) {
+    //     Object source = e.getItemSelectable();
+    //     boolean state = e.getStateChange() != ItemEvent.DESELECTED;
+    //     System.out.println("itemStateChanged");
+    //     if (source == runButton) {
+    //         SimNet.run = state;
+    //     } else if (source == linkButton) {
+    //         //...make a note of it...
+    //     }
+    // }
+
+    int hit (Point p) {
+        Station s[] = SimNet.station;
+        int k=-1, z = 9999999;
+        for (int i = 0; i < s.length; i++) {
+            Point q = loc(s[i]);
+            int d = Math.abs(p.x-q.x) + Math.abs(p.y-q.y);
+            if (d<z) {
+                k=i;
+                z=d;
+            }
+        }
+        return k;
+    }
 
 
     public void run() {
@@ -97,10 +135,15 @@ class MapPanel extends JPanel implements Runnable {
         Dimension d = getSize();
         g.drawImage(usa, 0, 0, d.width, d.height, this);
 
-        // labels & paths
+        // readouts & link
+        g.setColor(new Color(0,0,0,127));
         Station[] station = SimView.sim.station;
-        g.setColor(Color.black);
         g.drawString(station[from].city + " to " + station[to].city, 20, 15);
+        String minutes = String.format("%3.2f minutes",SimView.sim.clock);
+        g.drawString(minutes,20,d.height-10);
+
+        // labels & paths
+        g.setColor(new Color(0,0,0,95));
         for (int i=0; i<station.length; i++) {
             Point o = loc(station[i]);
             if (d.height>800) {
@@ -116,6 +159,7 @@ class MapPanel extends JPanel implements Runnable {
         }
 
         // paths in use
+        g.setColor(Color.black);
         g.setStroke(new BasicStroke(5));
         for (int i=0; i<station.length; i++) {
             Point o = loc(station[i]);

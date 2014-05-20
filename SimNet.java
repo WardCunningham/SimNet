@@ -74,8 +74,10 @@ public class SimNet extends Simulator implements Runnable {
         try {
             Thread.sleep(2000);
             while (true) {
-                simulate(0.02);     // minutes
-                Thread.sleep(50);   // milliseconds
+                if (run) {
+                    simulate(0.02);     // minutes
+                }
+                Thread.sleep(50);   // milliseconds                    
             }
         } catch (InterruptedException e) {
             System.out.println(e.getMessage());

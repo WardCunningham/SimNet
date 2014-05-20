@@ -28,17 +28,18 @@ public class Simulator {
     static double lastArrival = 240.0;
     static double interArrival = 20.0;  // typ 30.0
     static double arrivalTime = 2.0;
-    static boolean dynamic = true;  // load dependent routing
-    static boolean linked = true;   // trans-con link
-    static boolean popBased = true; // population based routing
+    static boolean dynamic = true;      // load dependent routing
+    static boolean linked = false;       // trans-con link
+    static boolean popBased = true;     // population based routing
 
 // major state
 
-    static double clock = 0.0;              // simulated time
-    static int meanPop = 0; // mean population
-    static int totalPop = 0;                // total population
+    static double clock = 0.0;          // simulated time
+    static boolean run = true;          // clock is running
+    static int meanPop = 0;             // mean population
+    static int totalPop = 0;            // total population
 
-    static int eventCount = 0;              // sample statistics
+    static int eventCount = 0;          // sample statistics
     static int msgCount = 0;
     static int updateCount = 0;
 

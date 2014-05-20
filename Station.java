@@ -26,6 +26,12 @@ public class Station extends Simulator {
         path[numPath++] = city;
     }
 
+    void removePath(int city) {
+        if (path[numPath] == city) {
+            numPath--;
+        }
+    }
+
     boolean hasMsg() {
         return nextMsg != null;
     }
