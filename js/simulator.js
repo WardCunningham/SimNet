@@ -5,6 +5,10 @@ class Graph {
         this.label = label
         reports.push(this)
     }
+
+    report() {
+
+    }
 }
 
 class Scatter {
@@ -12,6 +16,14 @@ class Scatter {
         this.xLabel = xLabel
         this.yLabel = yLabel
         reports.push(this)
+    }
+
+    mark(x, y) {
+
+    }
+
+    report() {
+
     }
 }
 
@@ -31,19 +43,19 @@ class EventBlock {
         return result+")";
     }
 
-    newUpdate(clock, nodeNum) {
+    static newUpdate(clock, nodeNum) {
         let e = new EventBlock(clock, nodeNum);
         e.type = 'update';
         return e;
     }
 
-    newXmit(clock, nodeNum) {
+    static newXmit(clock, nodeNum) {
         let e = new EventBlock(clock, nodeNum);
         e.type = 'xmit';
         return e;
     }
 
-    newArrival(clock, nodeNum) {
+    static newArrival(clock, nodeNum) {
         let e = new EventBlock(clock, nodeNum);
         e.type = 'arrival';
         return e;
@@ -55,14 +67,15 @@ class EventBlock {
         return e;
     }
 
-    ispatch () {
-         switch (type) {
+    dispatch () {
+         switch (this.type) {
             case 'xmit': {
-                station[node].doXmit();
+                station[this.node].doXmit();
                 break;
             }
             case 'arrival': {
-                station[node].doArrival();
+                console.log('dispatch arrival', this.node)
+                station[this.node].doArrival();
                 break;
             }
             case 'sample': {
@@ -70,7 +83,7 @@ class EventBlock {
                 break;
             }
             case 'update': {
-                station[node].doUpdate();
+                station[this.node].doUpdate();
                 break;
             }
         }
@@ -84,11 +97,28 @@ class EventBlock {
         eventCount = 0;
         updateCount = 0;
         if (clock < lastArrival || msgCount > 0) {
-            queue(newSample(clock+interval));
+            queue(EventBlock.newSample(clock+interval));
         }
     }
 
 }
+
+
+class Message {
+    track;       // path tracking
+    destZip;     // destination
+    hopCount;
+    queued;      // received time
+    start;       // start time
+    from;
+    to;
+
+    toString() {
+        return "Message("+this.from.city+" to "+this.to.city+" started "+w(this.start,8)+")";
+    }
+
+}
+
 
 
 const runName = " population based load";
@@ -287,8 +317,6 @@ class Station {
     delay = [];     // most recent information about peers [maxLevel][maxOrder]
     promise = [];   // last thing I promised [maxLevel][maxOrder]
     updating = false;   // update in progress
-    nextMsg = null;     // message queue pointers
-    lastMsg = null;
     queueLength = 0;    // number in message queue
     useCount = 0;       // message count for utilization
     useTime = 0.0;      // time using or waiting to use channel
@@ -298,6 +326,8 @@ class Station {
     latatude = 0;       // location;
     longitude = 0;
     displacement = 0;   // legend tweek for map
+
+    messageQueue = []    // replaces linked list
 
     constructor (props) {
         this.nodeNum = props.node;
@@ -316,6 +346,249 @@ class Station {
     addPath(node) {
         this.path.push(node);
     }
+
+
+    scheduleUpdate() {
+    //     if (!dynamic) return;
+    //     if (updating) return;
+    //     // trace("consider update", this);
+    //     int load = queueLength + 1;
+    //     for (int l=0; l<maxLevel; l++) {
+    //         // look for changes
+    //         for (int z=0; z<maxOrder; z++) {
+    //             double now = delay[l][z]+load;
+    //             double past = promise[l][z];
+    //             if (past == 0) {
+    //                 updating = true;
+    //             } else {
+    //                 double diff = Math.abs(now-past)/past;
+    //                 updating |= diff > 0.20;
+    //             }
+    //         }
+    //     }
+    //     if (!updating) return;
+
+    //     // trace("schedule update", this);
+    //     for (int l=0; l<maxLevel; l++) {
+    //         for (int z=0; z<maxOrder; z++) {
+    //             promise[l][z] = delay[l][z]+load;
+    //         }
+    //     }
+    //     queue(EventBlock.newUpdate(clock+0.2, nodeNum));
+    }
+
+    // void scheduleMessage() {
+    //     trace("schedule message", this);
+    //     // compute interference
+    //     double success = 1.0;
+    //     for (int i=0; i<numPath; i++) {
+    //         if (station[path[i]].hasMsg()) {
+    //             success *= waitTime / (xmitTime + waitTime);
+    //         }
+    //     }
+    //     double thisRetries = 1.0 / success - 1.0;
+    //     double totalTime =  xmitTime + thisRetries * (xmitTime+waitTime);
+    //     EventBlock e = EventBlock.newXmit(clock+totalTime, nodeNum);
+
+    //     // collect stats
+    //     retrys.count(thisRetries);
+    //     queueTime.count(clock - nextMsg.queued);
+    //     useCount++;
+    //     useTime += (e.time - clock);
+    //     queue(e);
+    // }
+
+    queueMsg(m) {
+        m.queued = clock;
+        this.queueLength++;
+        trace("queue", m);
+        queuing.mark (clock, this.queueLength);
+        this.messageQueue.push(m)
+        this.scheduleUpdate();
+    }
+
+    // Message dequeueMsg() {
+    //     Message msg = nextMsg;
+    //     nextMsg = msg.next;
+    //     if (nextMsg == null) {
+    //         lastMsg = null;
+    //     }
+    //     queueLength--;
+    //     trace("dequeue", msg);
+    //     queuing.mark(clock, queueLength);
+    //     return msg;
+    // }
+
+    arrivalWait () {
+        let t;
+        if (this.popBased) {
+            t = interArrival * meanPop / population - arrivalTime;
+        } else {
+            t = interArrival - arrivalTime;
+        }
+        if (t<0) t = 0;
+        return exponential()*t + arrivalTime;
+    }
+
+  // routing table access
+
+//     int delay (int i) {
+//         return delay(station[i].zip);
+//     }
+
+//     int delay (int[] toZip) {
+//         int z = zone(toZip);
+//         return delay[z][toZip[z]];
+//     }
+
+//     int promise (int i) {
+//         return promise(station[i].zip);
+//     }
+
+//     int promise (int[] toZip) {
+//         int z = zone(toZip);
+//         return promise[z][toZip[z]];
+//     }
+
+//     boolean[] pathsInUse () {
+//         boolean result[] = new boolean[numPath];
+//         for (Message m = nextMsg; m != null; m = m.next) {
+//             if (m.destZip != zip) {
+//                 int hop = nextHop(m.destZip);
+//                 for (int i=0; i<numPath; i++) {
+//                     if (path[i] == hop) {
+//                         result[i] = true;
+//                     }
+//                 }
+//             }
+//         }
+//         return result;
+//     }
+
+//     int nextHop (int i) {
+//         return nextHop(station[i].zip);
+//     }
+
+//     int nextHop (int[] toZip) {
+//         int z = zone(toZip);
+//         return route[z][toZip[z]];
+//     }
+
+//     int zone(int i) {
+//         return zone(station[i].zip);
+//     }
+
+//     int zone(int[] toZip) {
+//         int i = 0;
+//         while (i < (maxLevel-1) && zip[i] == toZip[i]) {
+//             i++;
+//         }
+//         return i;
+//     }
+
+// // events
+
+//     void doXmit () {
+//         Message thisMsg = dequeueMsg();
+//         if (nextMsg != null) {
+//             scheduleMessage();
+//         }
+
+//         boolean match = true;
+//         for (int i=0; i<maxLevel; i++) {
+//             match &= (thisMsg.destZip[i] == zip[i]);
+//         }
+//         if (match) {
+//             // at destination
+//             double total = clock - thisMsg.start;
+//             delivery.mark(thisMsg.start, total);
+//             transitTime.count(total);
+//             hops.count(thisMsg.hopCount);
+//             trace("deliver", thisMsg);
+//             msgCount--;
+//         } else {
+//             // en route
+//             int receiver = nextHop(thisMsg.destZip);
+//             trace("forward", station[receiver]);
+//             if (station[receiver].queueLength < queueLimit) {
+//                 station[receiver].queueMsg(thisMsg);
+//                 thisMsg.hopCount++;
+//             } else {
+//                 trace("blocked by", station[receiver]);
+//                 queueMsg(thisMsg);  // blocked (no ack) so retry
+//             }
+//         }
+//         scheduleUpdate();
+//     }
+
+    doArrival () {
+        let newMsg = new Message();
+        let dest = 0;
+        if (popBased) {
+            let object = Math.floor(uniform()*totalPop);
+            while (object>station[dest].population) {
+                dest++;
+                object -= station[dest].population;
+            }
+        } else {
+            dest = (int)(uniform()*station.length);
+        }
+        newMsg.from = this;
+        newMsg.to = station[dest];
+        newMsg.destZip = station[dest].zip;
+        newMsg.start = clock;
+        newMsg.track = Math.abs(clock-217.479) < 0.01;
+        newMsg.hopCount = 0;
+        trace("arrival", newMsg);
+        if (queue.length < queueLimit) {
+            this.queueMsg(newMsg);
+            msgCount++;
+        } else {
+            trace("blocked at", newMsg);
+        }
+        thisEvent.time = clock + this.arrivalWait();
+        if (thisEvent.time <= lastArrival) {
+            queue(thisEvent);
+        }
+    }
+
+//     void doUpdate () {
+//         for (int i=0; i<numPath; i++) {
+//             int receiver = path[i];
+//             station[receiver].updateFrom(nodeNum);
+//         }
+//         updating = false;
+//         updateCount++;
+//     }
+
+//     void updateFrom(int sender) {
+//         int changes = 0;
+//         for (int level=0; level<maxLevel; level++) {
+//             for (int zip=0; zip<maxOrder; zip++) {
+//                 int[] offer = station[sender].promise[level];
+//                 if (offer[zip] != 0) {
+//                   // known region
+//                    if (offer[zip] < delay[level][zip] || route[level][zip] == sender) {
+//                        // better offer or current dest
+//                        if (station[sender].route[level][zip] != nodeNum) {
+//                            // no flip
+//                            if (delay[level][zip] != offer[zip])
+//                                changes++;
+//                            delay[level][zip] = offer[zip];
+//                            route[level][zip] = sender;
+//                        }
+//                    }
+//                }
+//             }
+//             if (station[sender].zip[level] != zip[level]) {
+//                 break;
+//             }
+//         }
+//         if (changes > 0) {
+//             // trace ("update from", station[sender], new Integer(changes));
+//             scheduleUpdate();
+//         }
+//     }
 }
 
 // construction
@@ -335,8 +608,8 @@ function readInput() {
     const data = readJsonSync("./data.json");
     totalPop = 0;
     for (let props of data) {
-        station[props.node] = new Station(props)
-        totalPop += station[props.node].population;
+        station[props.node-1] = new Station(props)
+        totalPop += station[props.node-1].population;
     }
     meanPop = totalPop / station.length;
     if (linked) {
@@ -348,38 +621,38 @@ function readInput() {
 
 // simulation
 
-    // void initialArrivals () {
-    //     for (int i=0; i<station.length; i++) {
-    //         EventBlock e = EventBlock.newArrival(clock + station[i].arrivalWait(), i);
-    //         if (e.time <= lastArrival) {
-    //             queue(e);
-    //         } else {
-    //             trace("no arrival", station[i]);
-    //         }
-    //     }
-    // }
+function initialArrivals () {
+    for (let i=0; i<station.length; i++) {
+        let e = EventBlock.newArrival(clock + station[i].arrivalWait(), i);
+        if (e.time <= lastArrival) {
+            queue(e);
+        } else {
+            trace("no arrival", station[i]);
+        }
+    }
+}
 
 function initialSample () {
     let s = EventBlock.newSample(clock);
     queue(s);
 }
 
-    // void simulate(double period) {
-    //     double endTime = clock + period;
-    //     while (!eventQueue.isEmpty() && queueTime()<endTime){
-    //         dispatch();
-    //     }
-    //     clock = endTime;
-    // }
+function simulate(period) {
+    let endTime = clock + period;
+    while (eventQueue.length > 0 && queueTime()<endTime){
+        dispatch();
+    }
+    clock = endTime;
+}
 
-    // void dispatch() {
-    //     if (eventQueue.isEmpty()) return;
-    //     thisEvent = dequeue();
-    //     clock = thisEvent.time;
-    //     trace("dispatch", thisEvent);
-    //     thisEvent.dispatch();
-    //     eventCount++;
-    // }
+function dispatch() {
+    if (eventQueue.length == 0) return;
+    thisEvent = dequeue();
+    clock = thisEvent.time;
+    trace("dispatch", thisEvent);
+    thisEvent.dispatch();
+    eventCount++;
+}
 
     // public void run() {
     //     try {
@@ -439,12 +712,12 @@ function setup() {
 }
 
 function finish() {
-        while(!eventQueue.isEmpty()) {
+        while(eventQueue.length>0) {
             thisEvent = dequeue();
             trace("leftover", thisEvent);
         }
         report();
-        printTrace();
+        // printTrace();
     }
 
 function main () {
