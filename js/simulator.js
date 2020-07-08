@@ -39,7 +39,7 @@ class EventBlock {
 
     toString() {
         let result = this.type+"("+w(this.time,8);
-        if (this.node>=0) result += " "+station[node];
+        if (this.node>=0) result += " "+station[this.node];
         return result+")";
     }
 
@@ -74,7 +74,6 @@ class EventBlock {
                 break;
             }
             case 'arrival': {
-                console.log('dispatch arrival', this.node)
                 station[this.node].doArrival();
                 break;
             }
@@ -215,7 +214,7 @@ let updateCount = 0;
     // }
 
 function trace(label, a, b) {
-    console.log({clock,label,a,b})
+    console.log(`trace ${clock.toFixed(0)} ${label} ${a.toString()}`)
 }
     // static void trace (String label, Object a, Object b) {
     //     Trace newTrace = traces[nextTrace];

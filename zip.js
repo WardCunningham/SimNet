@@ -30,7 +30,7 @@ for (let props of data) {
 let exported = {}
 for (const [z, zone] of tree.entries()) {
   let title = `Zone ${z+1}`
-  let synopsis = `${desc[z]} has ${zone.length} zones with ${zone.map(r=>r.length).join(", ")} stations each.`
+  let synopsis = `${desc[z]} has ${zone.length} regions with ${zone.map(r=>r.length).join(", ")} stations each.`
   let story = [{type:'paragraph',text:synopsis,id:id()},{type:'paragraph',text:' See [[Topo Map]] of complete zone.',id:id()}]
   for (const [r, region] of zone.entries()) {
     let cities = region.map(props => props.city).join(", ")
