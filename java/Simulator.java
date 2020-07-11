@@ -28,8 +28,8 @@ public class Simulator {
     static double lastArrival = 240.0;
     static double interArrival = 20.0;  // typ 30.0
     static double arrivalTime = 2.0;
-    static boolean dynamic = true;  // load dependent routing
-    static boolean linked = true;   // trans-con link
+    static boolean dynamic = false;  // load dependent routing
+    static boolean linked = false;   // trans-con link
     static boolean popBased = true; // population based routing
 
 // major state
