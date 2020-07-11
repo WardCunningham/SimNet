@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+  </head>
+  <body>
+    <center>
+      <div class="viz"></div>
+      <p> 
+        We're following this guidance.
+        <a href=https://github.com/WardCunningham/spray-dots/commits/master target=_blank>github</a>,
+        <a href=http://dots.ward.asia.wiki.org/view/welcome-visitors/view/spray-dots/view/github-repo target=_blank>wiki</a>
+      <br>
+        We're rendering data from this radio network model. 
+        <a href=http://simnet.ward.asia.wiki.org/view/radio-network-simulator/view/how-the-model-works target=_blank>wiki</a>
+      </p>
+    </center>
+    <script>
+      fetch('http://simnet.ward.asia.wiki.org/assets/pages/next-hop-routing/data.json')
+        .then(res => res.json())
+        .then(json => draw(json))
+
+
+      function draw (data) {
+
+        console.log(data)
+        const stations = {}; 
+          for (let s of data) stations[s.zip] = s
+        const x = d3.scaleLinear()
+          .domain([-130, -60])
+          .range([0, 900])
+        const y = d3.scaleLinear()
+          .domain([50, 25 ])
+          .range([0, 500])
+
+        var width = 900, height = 500
+        var svg = d3.select('.viz')
+          .append('svg')
+            .attr('width',width)
+            .attr('height',height)
+            .style('border',"2px solid #ddd")
+          svg.selectAll('circle')
+            .data(data)
+            .enter()
+            .append('circle')
+              .attr('cx',d=>x(d.lon))
+              .attr('cy',d=>y(d.lat))
+              .attr('r',3)
+              .attr('fill','black')
+      }
+
+    </script>
+  </body>
+</html>
