@@ -1,0 +1,184 @@
+<html>
+  <head>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+  </head>
+  <body>
+    <center>
+      <div class="viz"></div>
+      <p> 
+        We're following this guidance.
+        <a href=https://github.com/WardCunningham/spray-dots/commits/master target=_blank>github</a>,
+        <a href=http://dots.ward.asia.wiki.org/view/welcome-visitors/view/spray-dots/view/github-repo target=_blank>wiki</a>
+      <br>
+        We're rendering data from this radio network model. 
+        <a href=http://simnet.ward.asia.wiki.org/view/how-the-model-works/view/analysis-tools/view/hop-player target=_blank>wiki</a>
+      </p>
+      <p id=stat>loading</p>
+      <p>
+      <span id=hopt></span><br>
+      <span id=mopt></span>
+    </p>
+    </center>
+    <script type='module'>
+
+      main()
+
+      async function main () {
+
+        // O P T I O N S
+
+        function opts (id, label,choices,units) {
+          let btns = choices.map(c => `<input type=radio name=${label} value=${c} checked> ${c}`).join(' ')
+          id.innerHTML = `${label}: ${btns} ${units}`
+          return () => document.querySelector(`input[name=${label}]:checked`).value
+        }
+
+        const hval = opts(hopt, 'dwell', [5,10,20], 'sec')
+        const mval = opts(mopt, 'transition', [100,200,400], 'msec')
+
+
+        // D A T A
+
+        let [data,hops] = await Promise.all([
+          fetch('http://simnet.ward.asia.wiki.org/assets/pages/next-hop-routing/data.json').then(res => res.json()),
+          fetch('http://simnet.ward.asia.wiki.org/assets/pages/message-traffic/hops/hops-pop-5sec-60min.json').then(res => res.text())
+        ])
+
+        const stations = {}
+        const paths = []
+        for (let s1 of data) {
+          let zip1 = s1.zip
+          for (let zip2 of s1.path) {
+            let s2 = stations[zip2]
+            if (s2 && zip1 != zip2) {
+              paths.push([s1,s2])
+            }
+          }
+          stations[s1.zip] = s1
+        }
+        hops = hops.split(/\r?\n/)
+          .filter(s => s.length)
+          .map(s => JSON.parse(s))
+
+
+        // B A S E M A P
+
+        // OVERVIEW ... 22.7153900, -126.8261719 50.5692829, -64.9951172
+
+        const x = d3.scaleLinear()
+          .domain([-126.8261719, -64.9951172])
+          .range([0, 900])
+        const y = d3.scaleLinear()
+          .domain([50.5692829, 22.7153900])
+          .range([0, 500])
+
+        var width = 900, height = 500
+        var svg = d3.select('.viz')
+          .append('svg')
+            .attr('width',width)
+            .attr('height',height)
+            .style('border',"2px solid #ddd")
+        svg.append('image')
+            .attr('width',width)
+            .attr('height',height)
+            .attr('href','http://simnet.ward.asia.wiki.org/assets/pages/next-hop-routing/usa.gif')
+        var lines = svg.selectAll('line')
+          lines.data(paths)
+          .enter()
+            .append('line')
+              .attr("x1", d => x(d[0].lon))
+              .attr("y1", d => y(d[0].lat))
+              .attr("x2", d => x(d[1].lon))
+              .attr("y2", d => y(d[1].lat))
+              .attr("stroke", "gray")
+
+
+        // P L A Y B A C K
+
+        let clock = 0
+        let queue = []
+        arrive()
+
+        function arrive() {
+          let next = hops.shift()
+          clock = next.shift()
+          let color = westward(next) ? 'blue' : 'red'
+          queue.unshift({who:clock, when:clock, where:next, color})
+        }
+
+        function proceed() {
+          let ready = queue[0]
+          ready.where.shift()
+          ready.when += (hval()*1 + Math.random())
+          prioritize()
+          clock = queue[0].when
+        }
+
+        function deliver() {
+          queue.shift()
+          if(queue.length) clock = queue[0].when
+        }
+
+        function prioritize() {
+          queue.sort((a,b) => a.when - b.when)
+        }
+
+        function westward(hops) {
+          let start = stations[hops[0]]
+          let finish = stations[hops[hops.length-1]]
+          return start.lon > finish.lon
+        }
+
+        function hop() {
+          if(queue[0].where.length > 1) {
+            proceed()
+          } else {
+            deliver()
+          }
+          if(hops.length && hops[0][0] < queue[0].when) {
+            arrive()
+          }
+        }
+
+
+        // A N I M A T I O N
+
+        const sleep = m => new Promise(r => setTimeout(r, m))
+
+        let update = 0
+        while(queue.length || hops.length) {
+
+          stat.innerHTML = `${update} elapsed seconds<br>${queue.length} messages in flight`
+          hop()
+
+          if (clock > update) {
+            update += 1
+            await sleep(100)
+
+            let hoppers = svg.selectAll('circle')
+              .data(queue, d => d.who+'')
+
+            hoppers.enter()
+              .append('circle')
+                .attr('cx',d => x(stations[d.where[0]].lon))
+                .attr('cy',d => y(stations[d.where[0]].lat))
+                .attr('r',9)
+                .attr('fill',d => d.color)
+                .attr('fill-opacity',0.5)
+
+            hoppers.exit()
+              .remove()
+
+            hoppers
+              .transition()
+                .duration(mval())
+                .attr('cx',d => x(stations[d.where[0]].lon))
+                .attr('cy',d => y(stations[d.where[0]].lat))
+          }
+        }
+        stat.innerHTML = `complete`
+      }
+
+    </script>
+  </body>
+</html>

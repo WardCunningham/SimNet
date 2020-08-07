@@ -48,6 +48,7 @@ class MapPanel extends JPanel implements Runnable {
         addMouseListener(new MouseAdapter() {
             public void mousePressed (MouseEvent e) {
                 from = hit(e.getPoint());
+                SimNet.station[from].debug();
             }
             public void mouseReleased (MouseEvent e) {
                 to = hit(e.getPoint());
@@ -153,8 +154,8 @@ class MapPanel extends JPanel implements Runnable {
         }
 
         // traceroute
-        trace(g);
-        // rivertrace(g, station);
+        // trace(g);
+        rivertrace(g, station);
 
     }
 

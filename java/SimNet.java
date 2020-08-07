@@ -32,6 +32,7 @@ public class SimNet extends Simulator implements Runnable {
             station[ny].addPath(sf);
             station[sf].addPath(ny);
         }
+        station[ny].debugtrace(sf);
     }
 
 

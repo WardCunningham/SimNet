@@ -22,6 +22,39 @@ public class Station extends Simulator {
     int longitude;
     int displacement;   // legend tweek for map
 
+    void debug() {
+        System.err.format("nodeNum: %d %s\n", nodeNum, city);
+        for (int i=0; i<maxLevel; i++) {
+            for (int j=0; j<maxOrder; j++) {
+                System.err.format("\t%d", route[i][j]);
+            }
+            System.err.format("\n");
+        }
+    }
+
+    void debugroute(int row, int col) {
+        System.err.format("nodeNum: %d %s\n", nodeNum, city);
+        for (int i=0; i<maxLevel; i++) {
+            for (int j=0; j<maxOrder; j++) {
+                System.err.format("\t%d%s", route[i][j], (row==i&&col==j)?" <":"  ");
+            }
+            System.err.format("\n");
+        }
+    }
+    
+    void debugtrace(int toward) {
+        int row = zone(toward);
+        int col = station[toward].zip[row];
+        int nxt = route[row][col];
+        debugroute(row,col);
+        if (nodeNum == toward) {
+            System.err.format("destination\n");
+            return;
+        }
+        System.err.format("row: %d, col: %d, nxt: %d\n", row, col, nxt);
+        station[nextHop(toward)].debugtrace(toward);
+    }
+
     void addPath(int city) {
         path[numPath++] = city;
     }
