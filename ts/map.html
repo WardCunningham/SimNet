@@ -141,6 +141,22 @@
         }
 
 
+        // D E C O R A T I O N
+
+        function shape(selection) {
+          selection
+            .attr('r',9)
+            .attr('fill',d => d.color)
+            .attr('fill-opacity',0.5)
+        }
+
+        function place(selection) {
+          selection
+            .attr('cx',d => x(stations[d.where[0]].lon))
+            .attr('cy',d => y(stations[d.where[0]].lat))            
+        }
+
+
         // A N I M A T I O N
 
         const sleep = m => new Promise(r => setTimeout(r, m))
@@ -160,11 +176,8 @@
 
             hoppers.enter()
               .append('circle')
-                .attr('cx',d => x(stations[d.where[0]].lon))
-                .attr('cy',d => y(stations[d.where[0]].lat))
-                .attr('r',9)
-                .attr('fill',d => d.color)
-                .attr('fill-opacity',0.5)
+                .call(shape)
+                .call(place)
 
             hoppers.exit()
               .remove()
@@ -172,8 +185,7 @@
             hoppers
               .transition()
                 .duration(mval())
-                .attr('cx',d => x(stations[d.where[0]].lon))
-                .attr('cy',d => y(stations[d.where[0]].lat))
+                .call(place)
           }
         }
         stat.innerHTML = `complete`
