@@ -35,8 +35,7 @@
     }
   }
   const toward = (here,there) => {
-    const famous = [112,222,855,933].reverse()
-    console.log('toward',{here,there})
+    const famous = [112,222,855,933]
     const towards = famous
       .filter(zip => route(here,zip) == there.zip)
       .map(zip => node(zip).city)
