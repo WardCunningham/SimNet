@@ -26,12 +26,29 @@
       (dy > 0 ? 'N' : 'S') :
       (dx > 0 ? 'E' : 'W')
   }
+  const route = (here,zip) => {
+    const digit = (zip,i) => +zip.toString().charAt(i)
+    for (let i=0; i<3; i++) {
+      if(digit(here.zip,i) != digit(zip,i)) {
+        return here.route[i][digit(zip,i)-1]
+      }
+    }
+  }
+  const toward = (here,there) => {
+    const famous = [112,222,855,933].reverse()
+    console.log('toward',{here,there})
+    const towards = famous
+      .filter(zip => route(here,zip) == there.zip)
+      .map(zip => node(zip).city)
+    return towards.length ? `⇒ ${towards.join(", ")}` : ''
+  }
 
   const picks = (nodes) => nodes
     .sort((a,b) => a.city - b.city)
     .map(there => `
-      ${params['zip'] ? point(node(params['zip']),there):''}
-      <span onclick=docity(event)>${there.city}</span>
+      ${params.zip ? point(node(params.zip),there):''}
+      <span onclick=docity(event) title=${there.zip}>${there.city}</span>
+      ${params.zip ? toward(node(params.zip),there):''}
     `)
     .join('<br>')
 
